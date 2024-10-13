@@ -9,9 +9,10 @@
 /*   Updated: 2024/10/12 19:51:48 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <string.h>
 
 int	ft_strlen(char *str)
 {
