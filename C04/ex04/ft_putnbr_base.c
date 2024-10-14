@@ -58,17 +58,17 @@ void	put_hex(int n)
 {
 	char	c;
 
-
 	c = 'A';
-	if (n >= 0 && n <= 9)
+	if (n < = 1)
+	{
+		return;
+	}
+	if (n % 16 > 1 && n % 16 < 10)
 	{
 		ft_putnbr(n);
+		n
 	}
-	else
-	{
-		c += (n - 10);
-		write(1, &c, 1);
-	}
+
 }
 
 void	ft_putnbr_base(int nbr, char *base)
