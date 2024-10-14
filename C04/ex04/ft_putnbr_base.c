@@ -56,19 +56,19 @@ void	ft_putnbr(int nb)
 
 void	put_hex(int n)
 {
-	char	c;
+	char	*to_char;
+	int		lead_z;
 
-	c = 'A';
-	if (n < = 1)
+	to_char = "0123456789ABCDEF";
+	if (n < 0)
+		n *= (-1);
+	if (n < 16)
 	{
-		return;
+		write(1, &to_char[n], 1);
+		return ;
 	}
-	if (n % 16 > 1 && n % 16 < 10)
-	{
-		ft_putnbr(n);
-		n
-	}
-
+	put_hex(n / 16);
+	write(1, &to_char[n % 16], 1);
 }
 
 void	ft_putnbr_base(int nbr, char *base)
@@ -89,17 +89,13 @@ void	ft_putnbr_base(int nbr, char *base)
 	}
 	if (ft_strcmp("0123456789ABCDEF", base) == 0)
 	{
-		i = 1;
-		while (i < 9)
-		{
-			put_hex((nbr >> (i * 4)) & 0x0F);
-			i++;
-		}
+		put_hex(nbr);
+		i++;
 	}
 }
 
 int	main(void)
 {
-	ft_putnbr_base(156, "0123456789ABCDEF");
+	ft_putnbr_base(256, "0123456789ABCDEF");
 	return (0);
 }
