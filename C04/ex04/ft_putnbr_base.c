@@ -13,19 +13,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int	ft_strcmp(char *s1, char *s2)
-{
-	unsigned char	s1_res;
-	unsigned char	s2_res;
-
-	while (*s1 && (*s1 == *s2))
-	{
-		s1++;
-		s2++;
-	}
-	return ((s1_res = *s1) - (s2_res = *s2));
-}
-
 void	ft_putnbr(int nb)
 {
 	char	c;
@@ -57,45 +44,71 @@ void	ft_putnbr(int nb)
 void	put_hex(int n)
 {
 	char	*to_char;
-	int		lead_z;
 
 	to_char = "0123456789ABCDEF";
-	if (n < 0)
-		n *= (-1);
-	if (n < 16)
-	{
-		write(1, &to_char[n], 1);
+	if (n < 1)
 		return ;
-	}
 	put_hex(n / 16);
 	write(1, &to_char[n % 16], 1);
 }
 
+void	put_bit(unsigned int n)
+{
+	bool zero_fl;
+	char prt_bt;
+	int count;
+
+	zero_fl = false;
+	count = 0;
+	n = (n >> 28) & 0x0F;
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	a;
+	int	b;
+
+	a = 0;
+	b = 0;
+	while (*s1)
+		a += *(s1++);
+	while (*s2)
+		b += *(s2++);
+	if (a == b)
+		return (0);
+	return (1);
+}
+
 void	ft_putnbr_base(int nbr, char *base)
 {
-	int		i;
-	char	c;
-
-	i = 31;
 	if (ft_strcmp("0123456789", base) == 0)
 		ft_putnbr(nbr);
 	if (ft_strcmp("01", base) == 0)
 	{
-		while (i >= 0)
-		{
-			ft_putnbr((nbr >> i) & 1);
-			i--;
-		}
+		if (nbr == 0)
+			write(1, "0", 1);
+		put_bit(nbr);
 	}
 	if (ft_strcmp("0123456789ABCDEF", base) == 0)
+		if (nbr < 0)
+		{
+			write(1, "-", 1);
+			nbr *= -1;
+			put_hex(nbr);
+		}
+	if (ft_strcmp("poneyvif", base) == 0)
 	{
-		put_hex(nbr);
-		i++;
+		if (nbr == 0)
+		{
+			return ;
+		}
+		ft_putnbr_base(nbr / 8, base);
+		ft_putnbr(nbr % 8);
 	}
 }
 
 int	main(void)
 {
-	ft_putnbr_base(256, "0123456789ABCDEF");
+	ft_putnbr_base(512, "0123456789");
 	return (0);
 }
