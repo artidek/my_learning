@@ -1,33 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_fibonacci.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/13 00:05:55 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/10/17 10:25:02 by aobshatk         ###   ########.fr       */
+/*   Created: 2024/10/17 16:51:56 by aobshatk          #+#    #+#             */
+/*   Updated: 2024/10/17 19:12:41 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include <stdio.h>
 
-void	ft_putstr(char *str);
-
-void	ft_putstr(char *str)
+int	ft_fibonacci(int index)
 {
-	char	c;
+	unsigned int	fib;
+	unsigned int	a;
+	unsigned int	b;
 
-	while (*str)
+	a = 0;
+	b = 1;
+	if (index == 0)
+		return (0);
+	if (index == 1)
+		return (1);
+	if (index < 0)
+		return (-1);
+	while (index - 1)
 	{
-		c = *str;
-		write(1, &c, 1);
-		str++;
+		fib = a + b;
+		a = b;
+		b = fib;
+		index--;
 	}
+	return (fib);
 }
-
-/*int main()
+/*int	main(void)
 {
-	ft_putstr("Hello");
-	return(0);
+	int	res;
+
+	res = ft_fibonacci(7);
+	printf("%d", res);
+	return (0);
 }*/

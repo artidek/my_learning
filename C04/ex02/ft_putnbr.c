@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 09:40:41 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/10/13 09:40:41 by aobshatk         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:21:21 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,32 @@
 void	ft_putnbr(int nb)
 {
 	char	c;
+	int		num;
 
-	c = '0';
-	if (nb < 10 && nb >= 0)
+	num = nb;
+	if (num < 0)
 	{
-		c = c + nb % 10;
+		if (num == -2147483648)
+		{
+			write(1, "-2147483648", 11);
+			return ;
+		}
+		write(1, "-", 1);
+		num = -num;
+	}
+	if (num / 10 == 0)
+	{
+		c = '0' + num % 10;
 		write(1, &c, 1);
 		return ;
 	}
-	if (nb >= 10)
-	{
-		c = c + nb % 10;
-		ft_putnbr(nb / 10);
-		write(1, &c, 1);
-	}
-	if (nb < 0)
-	{
-		c = '-';
-		write(1, &c, 1);
-		nb = nb * (-1);
-		ft_putnbr(nb / 10);
-		c = '0' + nb % 10;
-		write(1, &c, 1);
-	}
+	ft_putnbr(num / 10);
+	c = '0' + num % 10;
+	write(1, &c, 1);
 }
 
 /*int	main(void)
 {
-	ft_putnbr(10);
+	ft_putnbr(-2147483648);
 	return (0);
 }*/

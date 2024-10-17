@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 17:49:26 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/10/13 17:49:26 by aobshatk         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:54:53 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-//#include <stdio.h>
+
+#include <unistd.h>
 
 int	put_sign(int res, int sign)
 {
@@ -48,11 +49,11 @@ int	ft_atoi(char *str)
 	return (result);
 }
 
-/*int	main(int argc, char *argv[])
+/*int	main(void)
 {
-	int print_it;
+	//int print_it;
 
-	print_it = ft_atoi(argv[1]);
-	printf("%d", print_it);
+	//print_it = ft_atoi(argv[1]);
+	//printf("%d", print_it);
 	return (0);
 }*/

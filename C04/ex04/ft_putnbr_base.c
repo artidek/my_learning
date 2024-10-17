@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:02:46 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/10/14 19:51:59 by aobshatk         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:54:35 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,31 @@ int	check_base(char *str)
 
 void	put_nbr(int nbr, char *base, int base_n)
 {
-	int	rem;
+	int	num;
 
-	if (nbr < 0 && base_n > 2)
+	num = nbr;
+	if (num < 0)
 	{
+		if (num == -2147483648 && base_n != 2)
+		{
+			write(1, "-2147483648", 11);
+			return ;
+		}
+		if ((base_n == 2 && num == -2147483648))
+		{
+			write(1, "-10000000000000000000000000000000", 33);
+			return ;
+		}
 		write(1, "-", 1);
-		nbr *= -1;
+		num = -num;
 	}
-	if (nbr < 0 && base_n == 2)
+	if (num / base_n == 0)
 	{
-		write(1, "1", 1);
-		nbr *= -1;
-	}
-	if (nbr == 0)
+		write(1, &base[num % base_n], 1);
 		return ;
-	rem = nbr % base_n;
-	nbr = nbr / base_n;
-	put_nbr(nbr, base, base_n);
-	write(1, &base[rem], 1);
+	}
+	put_nbr(num / base_n, base, base_n);
+	write(1, &base[num % base_n], 1);
 }
 
 void	ft_putnbr_base(int nbr, char *base)
@@ -74,8 +81,6 @@ void	ft_putnbr_base(int nbr, char *base)
 
 /*int	main(void)
 {
-	int	result;
-
 	ft_putnbr_base(125, "01");
 	return (0);
 }*/
