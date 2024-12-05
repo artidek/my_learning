@@ -1,50 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sqrt.c                                          :+:      :+:    :+:   */
+/*   ft_is_prime.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 20:52:59 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/10/19 11:56:27 by aobshatk         ###   ########.fr       */
+/*   Created: 2024/10/18 12:19:54 by aobshatk          #+#    #+#             */
+/*   Updated: 2024/10/19 11:50:45 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <stdio.h>
-//#include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-int	ft_sqrt(int nb)
+int	ft_is_prime(int nb)
 {
-	int	a;
-	int	b;
-	int	result;
+	int	check_num;
 
-	a = nb;
-	b = nb - 2;
-	if (nb == 1)
-		return (1);
-	while (b > 1)
+	check_num = nb - 2;
+	if (nb <= 1)
+		return (0);
+	while (check_num > 0)
 	{
-		if (a % b == 0)
-		{
-			result = a / b;
-			a = result;
-		}
-		else
-		{
-			b -= 2;
-			a = nb;
-		}
-		if (result == 1)
-			return (b);
+		if (nb % check_num == 0 && check_num != 1)
+			return (0);
+		check_num -= 2;
 	}
-	return (0);
+	return (1);
 }
+
 /*int	main(int argc, char *argv[])
 {
-	int result = ft_sqrt(atoi(argv[1]));
-
-	printf("returned %d", result);
-
-	return (0);
+	int result = ft_is_prime(atoi(argv[1]));
+	printf("%d\n", result);
+	return(0);
 }*/
