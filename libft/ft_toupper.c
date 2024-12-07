@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 14:05:22 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/03 14:23:03 by aobshatk         ###   ########.fr       */
+/*   Created: 2024/12/06 20:53:09 by aobshatk          #+#    #+#             */
+/*   Updated: 2024/12/06 20:53:09 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include<stdio.h>
+#include<ctype.h>
 
-int	ft_isalnum(int c)
+int ft_toupper(int ch)
 {
-	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122) || (c >= 48 && c <= 57))
-		return (c);
-	return (0);
+	if (ch >= 97 && ch <= 122)
+		return(ch-=32);
+	return(ch);
 }

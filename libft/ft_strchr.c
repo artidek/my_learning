@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isprint.c                                       :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 14:30:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/03 15:46:42 by aobshatk         ###   ########.fr       */
+/*   Created: 2024/12/06 21:21:27 by aobshatk          #+#    #+#             */
+/*   Updated: 2024/12/06 21:21:27 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isprint(int c)
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+char *ft_strchr(const char *str, int ch)
 {
-	if (c > 31 && c < 127)
-		return (c);
-	return (0);
+	char cmp;
+
+	cmp = ch;
+	while(*str)
+	{
+		if (*str == cmp)
+			return ((char *)str);
+		str++;
+	}
+	return(NULL);
 }

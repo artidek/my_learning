@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 15:48:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/05 10:31:39 by aobshatk         ###   ########.fr       */
+/*   Created: 2024/12/06 21:13:07 by aobshatk          #+#    #+#             */
+/*   Updated: 2024/12/06 21:13:07 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include<stdio.h>
 
-int	ft_strlen(char *str)
+int ft_tolower(int ch)
 {
-	int	result;
-
-	result = 0;
-	while (str[result])
-		result++;
-	return (result);
+	if (ch >= 65 && ch <= 90)
+		return(ch+=32);
+	return(ch);
 }

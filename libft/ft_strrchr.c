@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 13:56:20 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/03 14:24:49 by aobshatk         ###   ########.fr       */
+/*   Created: 2024/12/06 21:42:54 by aobshatk          #+#    #+#             */
+/*   Updated: 2024/12/06 21:42:54 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int c)
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+char *ft_strrchr( const char* str, int ch )
 {
-	if (c >= 48 && c <= 57)
+	char *retptr;
+	char chr;
+
+	chr = ch;
+	retptr = NULL;
+	while(*str)
 	{
-		return (1);
+		if(*str == chr)
+			retptr = (char *) str;
+		str++;
 	}
-	else
-	{
-		return (0);
-	}
+	return retptr;
 }
