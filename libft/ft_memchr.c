@@ -10,11 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-void *ft_memchr(const void *s, int c, size_t n)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
+	unsigned char ch;
 
+	ch = c;
+	while (*(unsigned char *)s && n > 0)
+	{
+		if (*(unsigned char *)s == ch)
+			return ((unsigned char *)s);
+		s++;
+		n--;
+	}
+	return (NULL);
 }

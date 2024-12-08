@@ -10,22 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-char *ft_strrchr( const char* str, int ch )
+char	*ft_strrchr(const char *str, int ch)
 {
-	char *retptr;
-	char chr;
+	char	*retptr;
+	char	chr;
 
 	chr = ch;
 	retptr = NULL;
-	while(*str)
+	while (*str)
 	{
-		if(*str == chr)
-			retptr = (char *) str;
+		if (*str == chr)
+			retptr = (char *)str;
 		str++;
 	}
-	return retptr;
+	return (retptr);
 }

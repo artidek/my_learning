@@ -1,37 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 22:44:21 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/06 22:44:21 by aobshatk         ###   ########.fr       */
+/*   Created: 2024/12/07 20:12:01 by aobshatk          #+#    #+#             */
+/*   Updated: 2024/12/07 20:12:01 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_atoi(const char *str)
 {
-	unsigned char	str1;
-	unsigned char	str2;
+	int	i;
+	int	sign;
 
-	while (n > 0)
+	i = 0;
+	sign = 1;
+	while (*str == ' ')
+		str++;
+	if (*str == '+' || *str == '-')
 	{
-		str1 = *(unsigned char *)s1;
-		str2 = *(unsigned char *)s2;
-		if (str1 != str2)
-		{
-			if (str1 - str2 > 0)
-				return (1);
-			return (-1);
-		}
-		s1++;
-		s2++;
-		n--;
+		sign = 44 - *str;
+		str++;
 	}
-	return (0);
+	if (!(*str >= 48 && *str <= 57))
+		return (i);
+	while (*str >= 48 && *str <= 57)
+	{
+		i = i * 10 + (*str - 48);
+		str++;
+	}
+	return (i * sign);
 }

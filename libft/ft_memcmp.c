@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 22:44:21 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/06 22:44:21 by aobshatk         ###   ########.fr       */
+/*   Created: 2024/12/07 12:42:01 by aobshatk          #+#    #+#             */
+/*   Updated: 2024/12/07 12:42:01 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	unsigned char	str1;
-	unsigned char	str2;
-
 	while (n > 0)
 	{
-		str1 = *(unsigned char *)s1;
-		str2 = *(unsigned char *)s2;
-		if (str1 != str2)
+		if (*(unsigned char *)s1 != *(unsigned char *)s2)
 		{
-			if (str1 - str2 > 0)
+			if (*(unsigned char *)s1 - *(unsigned char *)s2 > 0)
 				return (1);
-			return (-1);
+			if (*(unsigned char *)s1 - *(unsigned char *)s2 < 0)
+				return (-1);
 		}
 		s1++;
 		s2++;

@@ -10,20 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-char *ft_strchr(const char *str, int ch)
+char	*ft_strchr(const char *str, int ch)
 {
-	char cmp;
+	char	cmp;
 
 	cmp = ch;
-	while(*str)
+	while (*str)
 	{
 		if (*str == cmp)
 			return ((char *)str);
 		str++;
 	}
-	return(NULL);
+	return (NULL);
 }
