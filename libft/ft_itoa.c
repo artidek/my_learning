@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 09:22:15 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/10 09:22:15 by aobshatk         ###   ########.fr       */
+/*   Updated: 2024/12/12 11:45:08 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	intsize(long long int n)
 	int	len;
 
 	len = 0;
-	while(n > 0)
+	while (n > 0)
 	{
 		len++;
 		n /= 10;
@@ -29,7 +29,7 @@ static int	intsize(long long int n)
 
 static char	*insertnum(long long int n, int sign, size_t size)
 {
-	int	len;
+	int		len;
 	char	*strint;
 
 	len = size - 2;
@@ -54,15 +54,14 @@ static char	*insertnum(long long int n, int sign, size_t size)
 char	*ft_itoa(int n)
 {
 	long long int	num;
-	int		neg;
-	int		len;
+	int				neg;
+	int				len;
 
 	neg = 0;
 	len = 0;
 	if (n < 0)
 	{
 		num = -(long long int)n;
-		printf("%lld\n", num);
 		neg = 1;
 		len++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:47:52 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/11 16:47:52 by aobshatk         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:48:21 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ int	ft_lstsize(t_list *lst)
 		lst = lst->next;
 		size++;
 	}
-	return (size + 1);
+	return (size);
 }
