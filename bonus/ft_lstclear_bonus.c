@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 21:24:11 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/12 12:17:47 by aobshatk         ###   ########.fr       */
+/*   Updated: 2024/12/13 15:08:02 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,8 @@ static void	ft_lstdelone(t_list *lst, void (*del)(void *))
 
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	int		size;
 	t_list	*temp;
 
-	size = 0;
 	if (!lst || !del)
 		return ;
 	while (*lst)
