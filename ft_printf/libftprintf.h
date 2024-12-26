@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   libftprintf.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 09:34:00 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/11 09:34:00 by aobshatk         ###   ########.fr       */
+/*   Created: 2024/12/26 13:51:35 by aobshatk          #+#    #+#             */
+/*   Updated: 2024/12/26 23:05:51 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef LIBFTPRINTF_H
+# define LIBFTPRINTF_H
+# include <stdarg.h>
+# include <stdlib.h>
 
-t_list	*ft_lstnew(void *content)
+# define MAX_SIZE 4096
+
+int				print_val(char *val);
+typedef int	*(*t_func_pntr)(void *);
+typedef struct t_formats
 {
-	t_list	*new_lst;
+	char		key;
+	t_func_pntr	function;
+}				t_formats;
 
-	new_lst = (t_list *)malloc(sizeof(t_list) * 1);
-	if (new_lst == NULL)
-		return (NULL);
-	new_lst->content = content;
-	new_lst->next = NULL;
-	return (new_lst);
-}
+const t_formats	g_formats[] = {{'s', print_val}, {'c', NULL}, {'d', NULL},{'\0', NULL}};
+
+#endif

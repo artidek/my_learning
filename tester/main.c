@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 13:18:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/12 13:31:54 by aobshatk         ###   ########.fr       */
+/*   Created: 2024/12/24 12:20:28 by aobshatk          #+#    #+#             */
+/*   Updated: 2024/12/26 13:52:41 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdlib.h>
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
-{
-	if (!lst || !f)
-		return ;
-	while (lst)
-	{
-		f(lst->content);
-		lst = lst->next;
-	}
+int main() {
+    printf("some number with min size %10s %x\n", "string", 10000);
+    return 0;
 }
