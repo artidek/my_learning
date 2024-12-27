@@ -6,13 +6,11 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 09:22:15 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/12 11:45:08 by aobshatk         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:27:55 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <limits.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
 static int	intsize(long long int n)
 {

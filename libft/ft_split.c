@@ -6,15 +6,11 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:22:49 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/18 17:59:25 by aobshatk         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:57:16 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "libft.h"
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "libft.h"
 
 static int	nstr(char const *s, char c)
 {
@@ -23,7 +19,7 @@ static int	nstr(char const *s, char c)
 	len = 0;
 	while (*s != '\0')
 	{
-		if (*s != c && c != '\0')
+		if (*s != c)
 		{
 			len++;
 			while (*s != c && *s != '\0')
@@ -35,139 +31,89 @@ static int	nstr(char const *s, char c)
 	return (len);
 }
 
-static void checkItems(char **arr, int size)
+static void	free_spltd(char **arr)
 {
-	char **temp;
-	int i;
+	int	i;
 
-	temp = arr;
 	i = 0;
-	while(size > 0)
+	while (arr[i] != NULL)
 	{
-		if (*temp == NULL && size > 1)
-		{
-			while(arr[i] != NULL)
-			{
-				free(arr[i]);
-				i++;
-			}
-			free(arr);
-			return;
-		}
-		temp++;
+		free(arr[i]);
+		i++;
 	}
+	free(arr);
 }
-static void ft_strlcpy(char *dst, const char *src, int len)
+
+static char	*fill_itm(const char *s, int len)
 {
-	if (dst == NULL)
-		return;
-	while (len > 0)
+	char	*res;
+	char	*temp;
+
+	res = malloc(sizeof(char) * len + 1);
+	if (res == NULL)
+		return (NULL);
+	temp = res;
+	while (*s != '\0' && len > 0)
 	{
-		*dst = *src;
-		dst++;
-		src++;
+		*temp++ = *s++;
 		len--;
 	}
-	*dst = '\0';
+	*temp = '\0';
+	return (res);
 }
 
-static int insertItme(char const *s, char c, char **arr)
+static int	insert_item(const char *s, char c, char **arr, int arr_pos)
 {
-	int pos;
-	int len;
-	const char *start;
-	char *itm;
+	const char	*start;
+	int			pos;
+	int			len;
 
-	len = 0;
 	pos = 0;
-	while (*s == c && c != '\0')
+	len = 0;
+	while (*s == c && c != 0)
 	{
-		pos++;
 		s++;
+		pos++;
 	}
 	start = s;
-	printf("%s\n", start);
 	while (*s != c && *s != '\0')
 	{
 		len++;
 		s++;
 	}
-	printf("%d\n", len);
-	itm = malloc(sizeof(char) * len + 1);
-	if (itm == NULL)
-		*arr == NULL;
-	ft_strlcpy(itm, start, len + 1);
-	*arr = itm;
+	arr[arr_pos] = fill_itm(start, len);
+	if (arr[arr_pos] == NULL)
+	{
+		free_spltd(arr);
+		return (0);
+	}
 	return (pos + len);
 }
+
 char	**ft_split(char const *s, char c)
 {
 	int		size;
-	char	**splited;
+	char	**spltd;
+	int		i;
 	int		pos;
 
 	size = nstr(s, c);
-	if (size == 0)
-		splited = malloc(sizeof(char *) * 1);
-	if (size > 0)
-		splited = malloc(sizeof(char *) * size + 1);
-	if (splited == NULL)
-		return (NULL);
-	pos = 0;
-	while (size > 0)
-	{
-		pos = insertItme(s, c, splited);
-		s += pos;
-		splited++;
-		size--;
-	}
-	splited[size] = NULL;
-	checkItems(splited, size + 1);
-	return (NULL);
-}
-
-void	freeTab(char **tab)
-{
-	int	i;
-
 	i = 0;
-	while (tab[i] != NULL)
+	pos = 0;
+	if (size == 0)
+		spltd = (char **)malloc(sizeof(char *));
+	if (size > 0)
+		spltd = (char **)malloc(sizeof(char *) * (size + 1));
+	if (spltd == NULL)
+		return (NULL);
+	while (i < size)
 	{
-		free(tab[i]);
+		pos = insert_item(s, c, spltd, i);
+		if (pos == 0)
+			return (NULL);
+		s += pos;
 		i++;
 	}
-	free(tab);
-}
-
-int	main(void)
-{
-	char	*splitme;
-	char	**tab;
-
-	tab = ft_split("  tripouille  42  ", ' ');
-	printf("%s\n", tab[0]);
-	freeTab(tab);
-	//tab = ft_split("tripouille", 0);
-	// freeTab(tab);
-	//tab = ft_split("     ", ' ');
-	// freeTab(tab);
-	//tab = ft_split("chinimala", ' ');
-	// freeTab(tab);
-	//tab = ft_split("", ' ');
-	// freeTab(tab);
-	//splitme = strdup("Tripouille");
-	//tab = ft_split(splitme, ' ');
-	//free(splitme);
-	//splitme = strdup("Tripouille ");
-	//tab = ft_split(splitme, ' ');
-	//free(splitme);
-	//splitme = strdup(" Tripouille");
-	//tab = ft_split(splitme, ' ');
-	//free(splitme);
-	//splitme = strdup(" Tripouille ");
-	//tab = ft_split(splitme, ' ');
-	//free(splitme);
-	//splitme = strdup("--1-2--3---4----5-----42");
-	//tab = ft_split(splitme, '-');
-	//free(splitme);
+	spltd[size] = NULL;
+	return (spltd);
 }

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 21:21:27 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/06 21:21:27 by aobshatk         ###   ########.fr       */
+/*   Updated: 2024/12/14 15:50:44 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "libft.h"
 
 char	*ft_strchr(const char *str, int ch)
 {
@@ -25,5 +23,7 @@ char	*ft_strchr(const char *str, int ch)
 			return ((char *)str);
 		str++;
 	}
+	if (*str == ch)
+		return ((char *)str);
 	return (NULL);
 }

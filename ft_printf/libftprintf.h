@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libftprintf.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 13:51:35 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/26 23:05:51 by aobshatk         ###   ########.fr       */
+/*   Updated: 2024/12/27 15:34:55 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,7 @@
 
 # define MAX_SIZE 4096
 
-int				print_val(char *val);
-typedef int	*(*t_func_pntr)(void *);
-typedef struct t_formats
-{
-	char		key;
-	t_func_pntr	function;
-}				t_formats;
-
-const t_formats	g_formats[] = {{'s', print_val}, {'c', NULL}, {'d', NULL},{'\0', NULL}};
+int			print_val(char *val);
+const char	g_formats[] = {'s', 'c', 'd', 'p', 'i', 'u', 'x', 'X'};
 
 #endif

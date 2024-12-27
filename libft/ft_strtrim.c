@@ -3,27 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 18:00:38 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/08 18:00:38 by aobshatk         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:12:22 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
-int	ft_strlen(char const *str)
-{
-	int	len;
-
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
-}
-
-int	ft_start(char const *s1, char const *set)
+static int	ft_start(char const *s1, char const *set)
 {
 	char const	*temp;
 	int			count;
@@ -46,7 +35,7 @@ int	ft_start(char const *s1, char const *set)
 	return (count);
 }
 
-int	ft_end(char const *s1, char const *set, int len, int start)
+static int	ft_end(char const *s1, char const *set, int len, int start)
 {
 	char const	*temp;
 	int			strt;
@@ -76,7 +65,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	char	*trstr;
 	char	*temp;
 
-	len = ft_strlen(s1);
+	len = ft_strlen((char *)s1);
 	strt = ft_start(s1, set);
 	end = ft_end(s1, set, len, strt);
 	trstr = malloc(sizeof(char) * (end - strt) + 2);

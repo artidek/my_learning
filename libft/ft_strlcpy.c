@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/05 12:24:41 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/18 16:00:36 by aobshatk         ###   ########.fr       */
+/*   Created: 2024/12/06 10:57:40 by aobshatk          #+#    #+#             */
+/*   Updated: 2024/12/23 16:55:10 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *restrict s1, const void *restrict s2, size_t n)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	unsigned char		*ptr;
-	const unsigned char	*ptr2;
+	size_t	i;
 
-	ptr = s1;
-	ptr2 = s2;
-	while (n > 0)
+	i = 0;
+	if (dstsize == 0)
 	{
-		*ptr++ = *ptr2++;
-		n--;
+		while (src[i])
+			i++;
+		return (i);
 	}
-	return (s1);
+	while (i < dstsize - 1 && src[i] != '\0')
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	if (i < dstsize)
+		dst[i] = '\0';
+	while (src[i] != '\0')
+		i++;
+	return (i);
 }

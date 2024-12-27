@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 21:42:54 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/06 21:42:54 by aobshatk         ###   ########.fr       */
+/*   Updated: 2024/12/14 16:22:26 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "libft.h"
 
 char	*ft_strrchr(const char *str, int ch)
 {
@@ -27,5 +25,7 @@ char	*ft_strrchr(const char *str, int ch)
 			retptr = (char *)str;
 		str++;
 	}
+	if (*str == ch)
+		retptr = (char *)str;
 	return (retptr);
 }

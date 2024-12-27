@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 13:04:26 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/08 13:04:26 by aobshatk         ###   ########.fr       */
+/*   Updated: 2024/12/22 13:55:26 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "libft.h"
 
 char	*ft_strdup(const char *s)
 {
@@ -27,7 +24,7 @@ char	*ft_strdup(const char *s)
 	dup = malloc(sizeof(char) * len + 1);
 	if (dup == NULL)
 	{
-		errno = ENOMEM;
+		write(1, "Memory allocation failed: ENOMEM\n", 30);
 		return (NULL);
 	}
 	temdup = dup;
