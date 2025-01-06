@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 13:53:07 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/03 15:45:08 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/06 21:15:24 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 static int	size(char *format, char *content)
 {
 	int	len;
+	int	i;
 
 	len = 0;
+	i = 0;
 	if (content == NULL)
 		return (len += 1);
 	len = (int)ft_strlen(content);
-	if ((*content == '\0' && *format == 'c'))
-		return (len += 1);
-	if (content[len] == '\0' && content[len + 1] == '\0' && *format == 'c')
+	if (content[0] == '\0' && *format == 'c')
 		return (len += 1);
 	return (len);
 }
@@ -43,7 +43,7 @@ static int	print_result(char *format, t_list *args)
 		if (move > 0)
 		{
 			args = args->next;
-			if(args->content != NULL)
+			if (args->content != NULL)
 				content = (char *)args->content;
 			len += size(format + move, content);
 			write(1, content, size(format + move, content));
@@ -80,8 +80,8 @@ int	ft_printf(char *format, ...)
 		move = ft_fnd_frmtr(&format[len], "cspdiuxX");
 		if (move > 0)
 		{
-			ft_prt_arg(ft_set_flags(flags, &format[len + 1]), args, &format[len
-				+ move], carg);
+			flags = ft_set_flags(&format[len + 1]);
+			ft_prt_arg(flags, args, &format[len + move], carg);
 			len += move;
 		}
 		len++;
@@ -97,8 +97,14 @@ int	ft_printf(char *format, ...)
 	int	val;
 	int	val1;
 	//char *null_str = NULL;
-	val = ft_printf("%10c", '\0');
+	//printf("%d\n", (int)sizeof(t_flags));
+	//puts("0123456789");
+	val = ft_printf("%.4d %.2d %.20d %.0d %.0d %.d %.d %.d\n", 127, 0, 1023, 0,
+			(int)-2147483648, 0, 1, (int)-2147483648);
 	printf("%d\n", val);
-	val1 = printf("%10c", '\0');
+	val1 = printf("%.4d %.2d %.20d %.0d %.0d %.d %.d %.d\n", 127, 0, 1023, 0,
+			(int)-2147483648, 0, 1, (int)-2147483648);
+	//val1 = printf("%.1s", null_str);
 	printf("%d\n", val1);
+	//ft_printf("this is a %s\n", "test");
 }*/

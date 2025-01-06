@@ -6,15 +6,16 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 20:43:39 by aobshatk          #+#    #+#             */
-/*   Updated: 2024/12/31 09:58:23 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/06 20:03:51 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-t_flags	ft_set_flags(t_flags flags, char *format)
+t_flags	ft_set_flags(char *format)
 {
 	char	*temp;
+	t_flags flags;
 
 	temp = format;
 	ft_memset(&flags, 0, sizeof(t_flags));
@@ -33,5 +34,6 @@ t_flags	ft_set_flags(t_flags flags, char *format)
 			flags.zero++;
 		temp++;
 	}
+	flags.msize = - 1;
 	return (ft_set_width(flags, temp));
 }

@@ -6,36 +6,55 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 07:38:00 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/03 14:07:12 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/06 20:33:45 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void	ft_print_char(t_flags flags, char args, t_list *cargs)
+static t_flags	override_flags(t_flags flags)
 {
-	int		len;
-	char	*result;
+	if (flags.width > 0)
+		flags.width -= 1;
+	return (flags);
+}
+
+static int	size(t_flags flags)
+{
+	int	len;
+	int	sz;
 
 	len = 1;
-	if ((flags.width > len && flags.minus) || (flags.width > len
-			&& !flags.minus))
-		len = len + (flags.width - len);
-	result = malloc(sizeof(char) * len + 1);
+	sz = len;
+	if (flags.width > 0)
+		sz = len + flags.width;
+	return (sz);
+}
+
+void	ft_print_char(t_flags flags, char args, t_list *cargs)
+{
+	t_flags	o_flags;
+	char	*result;
+	char *temp;
+
+	o_flags = override_flags(flags);
+	result = calloc(sizeof(char), sizeof(char) * size(o_flags) + 1);
 	if (!result)
-		return ;
-	if (flags.width > 1 && flags.minus)
-	{
+		return;
+	if (!o_flags.width)
 		result[0] = (char)args;
-		ft_memset(result + 1, ' ', sizeof(char) * len);
-	}
-	if (flags.width > 1 && !flags.minus)
+	temp = result;
+	if (o_flags.width && !flags.minus)
 	{
-		ft_memset(result, ' ', sizeof(char) * len - 1);
-		result[len - 1] = (char)args;
+		memset(result, ' ', size(o_flags) - 1);
+		temp += (size(o_flags) - 1);
+		*temp = (char)args;
 	}
-	if (!flags.width || flags.width == 1)
-		result[0] = (char)args;
-	result[len] = '\0';
+	if (o_flags.width && o_flags.minus)
+	{
+		temp[0] = (char)args;
+		temp++;
+		memset(temp, ' ', size(o_flags) - 1);
+	}
 	ft_lstadd_back(&cargs, ft_lstnew(result));
 }

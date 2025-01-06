@@ -6,89 +6,55 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 08:15:52 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/02 12:57:05 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/05 21:31:20 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static t_flags	override_flags(t_flags flags, char *conv)
+static t_flags	override_flags(t_flags flags, char *conv, int args)
 {
-	if (flags.minus)
+	if (flags.minus || flags.msize >= 0)
 		flags.zero = 0;
-	if (flags.plus)
-		flags.blank = 0;
-	if (conv[0] == '-')
+	if (args < 0)
 	{
 		flags.blank = 0;
 		flags.plus = 0;
+		flags.sign = 45;
 	}
-	return (flags);
-}
-
-static int	length(char *args, t_flags flags)
-{
-	int	len;
-
-	len = (int)ft_strlen(args);
-	if ((flags.plus || flags.blank) && flags.width > len)
-		len++;
-	if (flags.width > len)
-		len = len + (flags.width - len);
-	return (len);
-}
-
-static void	set_str(t_flags flags, char **result, void *args, int sz)
-{
-	sz = sz - (int)ft_strlen(args);
-	if (flags.blank)
-		*(*result)++ = ' ';
 	if (flags.plus)
-		*(*result)++ = '+';
-	if (flags.zero || !flags.minus)
 	{
-		while (sz-- > 0)
-		{
-			if (flags.zero)
-				*(*result)++ = '0';
-			else
-				*(*result)++ = ' ';
-		}
-		while (*(char *)args)
-			*(*result)++ = *(char *)args++;
+		flags.blank = 0;
+		flags.sign = 43;
 	}
-	if (flags.minus)
-	{
-		while (*(char *)args)
-			*(*result)++ = *(char *)args++;
-		while (sz-- > 0)
-			*(*result)++ = ' ';
-	}
+	if (flags.blank)
+		flags.sign = 32;
+	if (flags.sign)
+		flags.width--;
+	flags.width -= (int)ft_strlen(conv);
+	if (flags.msize > (int)ft_strlen(conv))
+		flags.width -= ((flags.msize - (int)ft_strlen(conv)));
+	return (flags);
 }
 
 void	ft_print_decimal(t_flags flags, int args, t_list *cargs)
 {
-	int		len;
 	char	*conv;
-	char	*result;
 	t_flags	o_flags;
 
 	conv = ft_itoa((int)args);
-	o_flags = override_flags(flags, conv);
-	len = (length(conv, o_flags));
-	result = malloc(sizeof(char) * len + 1);
-	if (!result)
-		return ;
-	if (len > (int)ft_strlen(conv))
+	o_flags = override_flags(flags, conv, (int)args);
+	if (conv[0] == '0' && o_flags.msize == 0)
 	{
-		set_str(o_flags, &result, conv, len);
-		*result = '\0';
-		ft_lstadd_back(&cargs, ft_lstnew(result - len));
+		o_flags = override_flags(flags, "", (int)args);
+		ft_print_digit(o_flags, "", cargs);
 	}
-	if (len <= (int)ft_strlen(conv))
+	else if (conv[0] == '-')
 	{
-		ft_strlcpy(result, conv, len + 1);
-		ft_lstadd_back(&cargs, ft_lstnew(result));
+		o_flags = override_flags(flags, &conv[1], (int)args);
+		ft_print_digit(o_flags, &conv[1], cargs);
 	}
+	else
+		ft_print_digit(o_flags, conv, cargs);
 	free(conv);
 }

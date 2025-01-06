@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 22:56:52 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/03 12:08:36 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/04 00:38:36 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,88 +19,92 @@ static t_flags	override_flags(t_flags flags)
 	return (flags);
 }
 
-static void	print_null(char *result, t_list *cargs, t_flags flags, int size)
+static void	print_null(t_flags flags, char *args, t_list *cargs)
 {
-	int	i;
+	int		len;
+	int		sz;
+	char	*result;
 
-	i = size - 6;
-	if (i > 0)
+	len = (int)ft_strlen(args);
+	sz = len;
+	if (flags.width > len)
+		sz = len + (flags.width - len);
+	result = malloc(sizeof(char) * sz + 1);
+	if (!result)
+		return ;
+	ft_memset(result, 0, sz + 1);
+	if (flags.minus)
 	{
-		if (!flags.minus)
-		{
-			ft_memset(result, ' ', i);
-			ft_memmove(result + i, "(nil)", sizeof(char) * 5);
-		}
-		else
-		{
-			ft_memmove(result, "(nil)", sizeof(char) * 5);
-			ft_memset(result + 5, ' ', i);
-		}
-		result[size] = '\0';
-		ft_lstadd_back(&cargs, ft_lstnew(result));
+		ft_memmove(result, args, len);
+		ft_memset(result + len + 2, ' ', sz - len);
 	}
 	else
 	{
-		ft_strlcpy(result, "(nil)", size);
-		ft_lstadd_back(&cargs, ft_lstnew(result));
+		ft_memset(result, ' ', sz - len);
+		ft_memmove(result + (sz - len), args, len);
 	}
+	ft_lstadd_back(&cargs, ft_lstnew(result));
 }
 
-static int	length(char *args, t_flags flags)
+static void	set_args_te(t_flags flags, char *args, t_list *cargs)
 {
-	int	len;
+	int		len;
+	int		sz;
+	char	*result;
 
-	len = (int)ft_strlen(args);
-	if (ft_strncmp(args, "(nil)", 5))
-		len += 2;
+	len = (int)ft_strlen(args) + 2;
+	sz = len;
 	if (flags.width > len)
-		len = len + (flags.width - len);
-	return (len);
+		sz = len + (flags.width - len);
+	result = malloc(sizeof(char) * sz + 1);
+	if (!result)
+		return ;
+	ft_memset(result, 0, sz + 1);
+	ft_memmove(result, "0x", 2);
+	ft_memmove(result + 2, args, len);
+	ft_memset(result + len + 2, ' ', sz - len);
+	ft_lstadd_back(&cargs, ft_lstnew(result));
 }
 
-static void	set_str(t_flags flags, int size, char **result, char *args)
+static void	set_args_fs(t_flags flags, char *args, t_list *cargs)
 {
-	size = size - (int)ft_strlen((char *)args) - 3;
-	if (!flags.minus)
-	{
-		while (size-- > 0)
-			*(*result)++ = ' ';
-	}
-	*(*result)++ = '0';
-	*(*result)++ = 'x';
-	while (*args)
-	{
-		*(*result)++ = *args++;
-	}
-	while (size-- > 0 && flags.minus)
-		*(*result)++ = ' ';
-	**result = '\0';
+	int		len;
+	int		sz;
+	char	*result;
+
+	len = (int)ft_strlen(args) + 2;
+	sz = len;
+	if (flags.width > len)
+		sz = len + (flags.width - len);
+	result = malloc(sizeof(char) * sz + 1);
+	if (!result)
+		return ;
+	ft_memset(result, 0, sz + 1);
+	ft_memset(result, ' ', sz - len);
+	ft_memmove(result + (sz - len), "0x", 2);
+	ft_memmove(result + (sz - len) + 2, args, len);
+	ft_lstadd_back(&cargs, ft_lstnew(result));
 }
 
 void	ft_print_pointer(t_flags flags, void *args, t_list *cargs)
 {
-	int		len;
-	t_flags	o_flags;
-	char	*result;
-	char	*sargs;
+	t_flags					o_flags;
+	char					*sargs;
+	long long unsigned int	dargs;
 
 	o_flags = override_flags(flags);
-	if ((long long unsigned int)args == 0)
+	dargs = (long long unsigned int)args;
+	if (dargs == 0)
 	{
-		result = malloc(sizeof(char) * length("(nil)", o_flags) + 1);
-		if (!result)
-			return ;
-		print_null(result, cargs, o_flags, length("(nil)", o_flags) + 1);
+		sargs = "(nil)";
+		print_null(o_flags, sargs, cargs);
+		return;
 	}
 	else
-	{
-		sargs = ft_btoa((long long unsigned int)args, "0123456789abcdef");
-		len = length(sargs, o_flags);
-		result = malloc(sizeof(char) * len + 1);
-		if (!result)
-			return ;
-		set_str(o_flags, len + 1, &result, sargs);
-		ft_lstadd_back(&cargs, ft_lstnew(result - len));
-		free(sargs);
-	}
+		sargs = ft_btoa(dargs, "0123456789abcdef");
+	if (flags.minus)
+		set_args_te(o_flags, sargs, cargs);
+	else
+		set_args_fs(o_flags, sargs, cargs);
+	free(sargs);
 }

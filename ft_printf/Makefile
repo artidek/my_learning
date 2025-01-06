@@ -6,7 +6,7 @@
 #    By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/23 17:00:05 by aobshatk          #+#    #+#              #
-#    Updated: 2025/01/02 23:20:29 by aobshatk         ###   ########.fr        #
+#    Updated: 2025/01/05 19:24:47 by aobshatk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRCS			= ft_check_width.c ft_fnd_frmtr.c ft_set_width.c \
 				  ft_print_str.c ft_print_char.c ft_print_decimal.c \
 				  ft_utoa.c ft_print_uint.c ft_print_x.c \
 				  ft_btoa.c ft_print_cx.c ft_print_pointer.c \
-				  ft_printf.c ft_print_hex.c
+				  ft_printf.c ft_print_hex.c ft_print_digit.c
 
 OBJS			= $(SRCS:.c=.o)
 CC				= cc

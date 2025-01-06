@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_hex.c                                     :+:      :+:    :+:   */
+/*   ft_print_digit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 23:09:35 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/06 21:15:30 by aobshatk         ###   ########.fr       */
+/*   Created: 2025/01/05 19:04:49 by aobshatk          #+#    #+#             */
+/*   Updated: 2025/01/05 20:59:56 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static int	size(char *args, t_flags flags)
 	sz = len;
 	if (flags.width > 0)
 		sz = len + flags.width;
-	if (flags.hash)
-		sz += 2;
+	if (flags.sign)
+		sz++;
 	return (sz);
 }
 
@@ -43,7 +43,7 @@ static char	*print_zero(t_flags flags, char *temp, int len)
 	return (temp);
 }
 
-static void	set_args_te(t_flags flags, char *args, t_list *cargs, char *x)
+static void	set_args_te(t_flags flags, char *args, t_list *cargs)
 {
 	int		sz;
 	char	*result;
@@ -54,10 +54,10 @@ static void	set_args_te(t_flags flags, char *args, t_list *cargs, char *x)
 	if (!result)
 		return ;
 	temp = result;
-	if (flags.hash)
+	if (flags.sign)
 	{
-		memmove(temp, x, 2);
-		temp += 2;
+		memset(temp, flags.sign, 1);
+		temp += 1;
 	}
 	if (flags.zero || flags.msize > (int)ft_strlen(args))
 		temp = print_zero(flags, temp, (int)ft_strlen(args));
@@ -71,7 +71,7 @@ static void	set_args_te(t_flags flags, char *args, t_list *cargs, char *x)
 	ft_lstadd_back(&cargs, ft_lstnew(result));
 }
 
-static void	set_args_fs(t_flags flags, char *args, t_list *cargs, char *x)
+static void	set_args_fs(t_flags flags, char *args, t_list *cargs)
 {
 	int		sz;
 	char	*result;
@@ -87,10 +87,10 @@ static void	set_args_fs(t_flags flags, char *args, t_list *cargs, char *x)
 		memset(temp, ' ', flags.width);
 		temp += flags.width;
 	}
-	if (flags.hash)
+	if (flags.sign)
 	{
-		memmove(temp, x, 2);
-		temp += 2;
+		memset(temp, flags.sign, 1);
+		temp += 1;
 	}
 	if (flags.zero || flags.msize > (int)ft_strlen(args))
 		temp = print_zero(flags, temp, (int)ft_strlen(args));
@@ -98,10 +98,10 @@ static void	set_args_fs(t_flags flags, char *args, t_list *cargs, char *x)
 	ft_lstadd_back(&cargs, ft_lstnew(result));
 }
 
-void	ft_print_hex(t_flags flags, char *conv, t_list *cargs, char *x)
+void	ft_print_digit(t_flags flags, char *conv, t_list *cargs)
 {
 	if (flags.minus)
-		set_args_te(flags, conv, cargs, x);
+		set_args_te(flags, conv, cargs);
 	else
-		set_args_fs(flags, conv, cargs, x);
+		set_args_fs(flags, conv, cargs);
 }
