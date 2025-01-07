@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 21:19:41 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/07 00:23:01 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/07 20:58:23 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	size(char *args, t_flags flags)
 	return (sz);
 }
 
-static void	set_args_te(t_flags flags, char *args, t_list *cargs, t_list *sizes)
+static int	set_args_te(t_flags flags, char *args, t_list *cargs)
 {
 	int		sz;
 	char	*result;
@@ -56,12 +56,12 @@ static void	set_args_te(t_flags flags, char *args, t_list *cargs, t_list *sizes)
 	sz = size(args, flags);
 	result = ft_calloc(sizeof(char), sizeof(char) * sz + 1);
 	if (!result)
-		return ;
+		return (0);
 	temp = result;
 	if (sz + 1 == 1)
 	{
 		ft_lstadd_back(&cargs, ft_lstnew(result));
-		return ;
+		return (sz);
 	}
 	memmove(temp, args, sz - flags.width);
 	temp += (sz - flags.width);
@@ -71,10 +71,10 @@ static void	set_args_te(t_flags flags, char *args, t_list *cargs, t_list *sizes)
 		temp += flags.width;
 	}
 	ft_lstadd_back(&cargs, ft_lstnew(result));
-	ft_lstadd_back(&sizes, ft_lstnew(&sz));
+	return (sz);
 }
 
-static void	set_args_fs(t_flags flags, char *args, t_list *cargs, t_list *sizes)
+static int	set_args_fs(t_flags flags, char *args, t_list *cargs)
 {
 	int		sz;
 	char	*result;
@@ -83,12 +83,12 @@ static void	set_args_fs(t_flags flags, char *args, t_list *cargs, t_list *sizes)
 	sz = size(args, flags);
 	result = ft_calloc(sizeof(char), sizeof(char) * sz + 1);
 	if (!result)
-		return ;
+		return (0);
 	temp = result;
 	if (sz + 1 == 1)
 	{
 		ft_lstadd_back(&cargs, ft_lstnew(result));
-		return ;
+		return (sz);
 	}
 	if (flags.width > 0)
 	{
@@ -97,15 +97,19 @@ static void	set_args_fs(t_flags flags, char *args, t_list *cargs, t_list *sizes)
 	}
 	memmove(temp, args, sz - flags.width);
 	ft_lstadd_back(&cargs, ft_lstnew(result));
-	ft_lstadd_back(&sizes, ft_lstnew(&sz));
+	return (sz);
 }
 
 void	ft_print_str(t_flags flags, void *args, t_list *cargs, t_list *sizes)
 {
 	char	*sargs;
 	t_flags	o_flags;
+	int		*sz;
 
 	sargs = (char *)args;
+	sz = malloc(sizeof(int));
+	if (!sz)
+		return ;
 	if ((!sargs && flags.msize >= (int)ft_strlen("(null)")) || (!sargs
 			&& flags.msize < 0))
 		sargs = "(null)";
@@ -113,7 +117,8 @@ void	ft_print_str(t_flags flags, void *args, t_list *cargs, t_list *sizes)
 		sargs = "\0";
 	o_flags = override_flags(flags, sargs);
 	if (flags.minus)
-		set_args_te(o_flags, sargs, cargs, sizes);
+		*sz = set_args_te(o_flags, sargs, cargs);
 	else
-		set_args_fs(o_flags, sargs, cargs, sizes);
+		*sz = set_args_fs(o_flags, sargs, cargs);
+	ft_lstadd_back(&sizes, ft_lstnew(sz));
 }

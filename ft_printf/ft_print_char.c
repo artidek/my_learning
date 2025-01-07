@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 07:38:00 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/07 00:36:06 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/07 23:33:38 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,14 @@ void	ft_print_char(t_flags flags, char args, t_list *cargs, t_list *sizes)
 	t_flags	o_flags;
 	char	*result;
 	int		sz;
+	int		*sptr;
 
 	o_flags = override_flags(flags);
+	sptr = malloc(sizeof(int));
+	if (!sptr)
+		return ;
 	sz = size(o_flags);
+	*sptr = sz;
 	result = calloc(sizeof(char), sizeof(char) * sz + 1);
 	if (!result)
 		return ;
@@ -65,5 +70,5 @@ void	ft_print_char(t_flags flags, char args, t_list *cargs, t_list *sizes)
 		result[0] = (char)args;
 	set_str(result, o_flags, sz, args);
 	ft_lstadd_back(&cargs, ft_lstnew(result));
-	ft_lstadd_back(&sizes, ft_lstnew(&sz));
+	ft_lstadd_back(&sizes, ft_lstnew(sptr));
 }

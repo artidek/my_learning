@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 22:56:52 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/07 00:40:55 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/07 21:54:06 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_flags	override_flags(t_flags flags)
 	return (flags);
 }
 
-static void	print_null(t_flags flags, char *args, t_list *cargs)
+static int	print_null(t_flags flags, char *args, t_list *cargs)
 {
 	int		len;
 	int		sz;
@@ -31,12 +31,12 @@ static void	print_null(t_flags flags, char *args, t_list *cargs)
 		sz = len + (flags.width - len);
 	result = malloc(sizeof(char) * sz + 1);
 	if (!result)
-		return ;
+		return (0);
 	ft_memset(result, 0, sz + 1);
 	if (flags.minus)
 	{
 		ft_memmove(result, args, len);
-		ft_memset(result + len + 2, ' ', sz - len);
+		ft_memset(result + len, ' ', sz - len);
 	}
 	else
 	{
@@ -44,9 +44,10 @@ static void	print_null(t_flags flags, char *args, t_list *cargs)
 		ft_memmove(result + (sz - len), args, len);
 	}
 	ft_lstadd_back(&cargs, ft_lstnew(result));
+	return (sz);
 }
 
-static void	set_args_te(t_flags flags, char *args, t_list *cargs, t_list *sizes)
+static int	set_args_te(t_flags flags, char *args, t_list *cargs)
 {
 	int		len;
 	int		sz;
@@ -58,16 +59,16 @@ static void	set_args_te(t_flags flags, char *args, t_list *cargs, t_list *sizes)
 		sz = len + (flags.width - len);
 	result = malloc(sizeof(char) * sz + 1);
 	if (!result)
-		return ;
+		return (0);
 	ft_memset(result, 0, sz + 1);
 	ft_memmove(result, "0x", 2);
 	ft_memmove(result + 2, args, len);
-	ft_memset(result + len + 2, ' ', sz - len);
+	ft_memset(result + len, ' ', sz - len);
 	ft_lstadd_back(&cargs, ft_lstnew(result));
-	ft_lstadd_back(&sizes, ft_lstnew(&sz));
+	return (sz);
 }
 
-static void	set_args_fs(t_flags flags, char *args, t_list *cargs, t_list *sizes)
+static int	set_args_fs(t_flags flags, char *args, t_list *cargs)
 {
 	int		len;
 	int		sz;
@@ -79,34 +80,41 @@ static void	set_args_fs(t_flags flags, char *args, t_list *cargs, t_list *sizes)
 		sz = len + (flags.width - len);
 	result = malloc(sizeof(char) * sz + 1);
 	if (!result)
-		return ;
+		return (0);
 	ft_memset(result, 0, sz + 1);
 	ft_memset(result, ' ', sz - len);
 	ft_memmove(result + (sz - len), "0x", 2);
 	ft_memmove(result + (sz - len) + 2, args, len);
 	ft_lstadd_back(&cargs, ft_lstnew(result));
-	ft_lstadd_back(&sizes, ft_lstnew(&sz));
+	return (sz);
 }
 
-void	ft_print_pointer(t_flags flags, void *args, t_list *cargs, t_list *sizes)
+void	ft_print_pointer(t_flags flags, void *args, t_list *cargs,
+		t_list *sizes)
 {
 	t_flags					o_flags;
 	char					*sargs;
 	long long unsigned int	dargs;
+	int						*sz;
 
 	o_flags = override_flags(flags);
 	dargs = (long long unsigned int)args;
+	sz = malloc(sizeof(int));
+	if (!sz)
+		return ;
 	if (dargs == 0)
 	{
 		sargs = "(nil)";
-		print_null(o_flags, sargs, cargs);
-		return;
+		*sz = print_null(o_flags, sargs, cargs);
+		ft_lstadd_back(&sizes, ft_lstnew(sz));
+		return ;
 	}
 	else
 		sargs = ft_btoa(dargs, "0123456789abcdef");
 	if (flags.minus)
-		set_args_te(o_flags, sargs, cargs, sizes);
+		*sz = set_args_te(o_flags, sargs, cargs);
 	else
-		set_args_fs(o_flags, sargs, cargs, sizes);
+		*sz = set_args_fs(o_flags, sargs, cargs);
+	ft_lstadd_back(&sizes, ft_lstnew(sz));
 	free(sargs);
 }

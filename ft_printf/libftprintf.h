@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 13:51:35 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/06 23:59:47 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/07 23:33:46 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,13 @@ void	ft_print_decimal(t_flags flags, int args, t_list *cargs, t_list *sizes);
 char	*ft_utoa(unsigned int n);
 void	ft_print_uint(t_flags flags, unsigned int args, t_list *cargs,
 			t_list *sizes);
-void	ft_print_x(t_flags flags, unsigned int args, t_list *cargs, t_list *sizes);
+void	ft_print_x(t_flags flags, unsigned int args, t_list *cargs,
+			t_list *sizes);
 char	*ft_btoa(long long unsigned int n, char *base);
-void	ft_print_cx(t_flags flags, unsigned int args, t_list *cargs, t_list *sizes);
-void	ft_print_pointer(t_flags flags, void *args, t_list *cargs, t_list *sizes);
+void	ft_print_cx(t_flags flags, unsigned int args, t_list *cargs,
+			t_list *sizes);
+void	ft_print_pointer(t_flags flags, void *args, t_list *cargs,
+			t_list *sizes);
 void	ft_print_hex(t_flags flags, char *conv, t_list *cargs, ...);
 int		ft_printf(char *format, ...);
 void	ft_print_digit(t_flags flags, char *conv, t_list *cargs, t_list *sizes);

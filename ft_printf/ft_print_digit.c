@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 19:04:49 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/07 00:40:04 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/07 20:40:56 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*print_zero(t_flags flags, char *temp, int len)
 	return (temp);
 }
 
-static void	set_args_te(t_flags flags, char *args, t_list *cargs, t_list *sizes)
+static int	set_args_te(t_flags flags, char *args, t_list *cargs)
 {
 	int		sz;
 	char	*result;
@@ -52,7 +52,7 @@ static void	set_args_te(t_flags flags, char *args, t_list *cargs, t_list *sizes)
 	sz = size(args, flags);
 	result = ft_calloc(sizeof(char), sizeof(char) * sz + 1);
 	if (!result)
-		return ;
+		return (0);
 	temp = result;
 	if (flags.sign)
 	{
@@ -69,10 +69,10 @@ static void	set_args_te(t_flags flags, char *args, t_list *cargs, t_list *sizes)
 		temp += flags.width;
 	}
 	ft_lstadd_back(&cargs, ft_lstnew(result));
-	ft_lstadd_back(&sizes, ft_lstnew(&sz));
+	return (sz);
 }
 
-static void	set_args_fs(t_flags flags, char *args, t_list *cargs, t_list *sizes)
+static int	set_args_fs(t_flags flags, char *args, t_list *cargs)
 {
 	int		sz;
 	char	*result;
@@ -81,7 +81,7 @@ static void	set_args_fs(t_flags flags, char *args, t_list *cargs, t_list *sizes)
 	sz = size(args, flags);
 	result = ft_calloc(sizeof(char), sizeof(char) * sz + 1);
 	if (!result)
-		return ;
+		return (0);
 	temp = result;
 	if (flags.width > 0 && !flags.zero)
 	{
@@ -97,13 +97,19 @@ static void	set_args_fs(t_flags flags, char *args, t_list *cargs, t_list *sizes)
 		temp = print_zero(flags, temp, (int)ft_strlen(args));
 	memmove(temp, args, (int)ft_strlen(args));
 	ft_lstadd_back(&cargs, ft_lstnew(result));
-	ft_lstadd_back(&sizes, ft_lstnew(&sz));
+	return (sz);
 }
 
 void	ft_print_digit(t_flags flags, char *conv, t_list *cargs, t_list *sizes)
 {
+	int	*size;
+
+	size = malloc(sizeof(int));
+	if (!size)
+		return ;
 	if (flags.minus)
-		set_args_te(flags, conv, cargs, sizes);
+		*size = set_args_te(flags, conv, cargs);
 	else
-		set_args_fs(flags, conv, cargs, sizes);
+		*size = set_args_fs(flags, conv, cargs);
+	ft_lstadd_back(&sizes, ft_lstnew(size));
 }

@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 23:09:35 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/07 00:46:16 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/07 23:23:29 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static int	set_args_fs(t_flags flags, char *args, t_list *cargs, char *x)
 
 void	ft_print_hex(t_flags flags, char *conv, t_list *cargs, ...)
 {
-	int		sz;
+	int		*sz;
 	char	*x;
 	t_list	*sizes;
 	va_list	args;
@@ -111,10 +111,14 @@ void	ft_print_hex(t_flags flags, char *conv, t_list *cargs, ...)
 	x = (char *)va_arg(args, char *);
 	sizes = (t_list *)va_arg(args, t_list *);
 	va_end(args);
-	sz = 0;
+	sz = malloc(sizeof(int));
+	if (!sz)
+		return ;
+	if (conv[0] == '0')
+		flags.hash = 0;
 	if (flags.minus)
-		sz = set_args_te(flags, conv, cargs, x);
+		*sz = set_args_te(flags, conv, cargs, x);
 	else
-		sz = set_args_fs(flags, conv, cargs, x);
-	ft_lstadd_back(&sizes, ft_lstnew(&sz));
+		*sz = set_args_fs(flags, conv, cargs, x);
+	ft_lstadd_back(&sizes, ft_lstnew(sz));
 }

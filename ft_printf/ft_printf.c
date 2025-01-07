@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 13:53:07 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/07 01:06:58 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/07 23:35:12 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,6 @@ static void	del(void *ptr)
 	}
 }
 
-static void free_sizes(t_list *sizes)
-{
-	t_list  *temp;
-
-	while (sizes)
-	{
-		temp = sizes->next;
-		free(sizes);
-		sizes = temp;
-	}
-}
-
 int	ft_printf(char *format, ...)
 {
 	va_list	args;
@@ -98,23 +86,6 @@ int	ft_printf(char *format, ...)
 	va_end(args);
 	len = print_result(format, carg, sizes);
 	ft_lstclear(&carg, del);
-	free_sizes(sizes);
+	ft_lstclear(&sizes, del);
 	return (len);
 }
-
-/*int	main(void)
-{
-	int	val;
-	int	val1;
-	//char *null_str = NULL;
-	//printf("%d\n", (int)sizeof(t_flags));
-	//puts("0123456789");
-	val = ft_printf("%.4d %.2d %.20d %.0d %.0d %.d %.d %.d\n", 127, 0, 1023, 0,
-			(int)-2147483648, 0, 1, (int)-2147483648);
-	printf("%d\n", val);
-	val1 = printf("%.4d %.2d %.20d %.0d %.0d %.d %.d %.d\n", 127, 0, 1023, 0,
-			(int)-2147483648, 0, 1, (int)-2147483648);
-	//val1 = printf("%.1s", null_str);
-	printf("%d\n", val1);
-	//ft_printf("this is a %s\n", "test");
-}*/
