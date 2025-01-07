@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 22:56:52 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/04 00:38:36 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/07 00:40:55 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	print_null(t_flags flags, char *args, t_list *cargs)
 	ft_lstadd_back(&cargs, ft_lstnew(result));
 }
 
-static void	set_args_te(t_flags flags, char *args, t_list *cargs)
+static void	set_args_te(t_flags flags, char *args, t_list *cargs, t_list *sizes)
 {
 	int		len;
 	int		sz;
@@ -64,9 +64,10 @@ static void	set_args_te(t_flags flags, char *args, t_list *cargs)
 	ft_memmove(result + 2, args, len);
 	ft_memset(result + len + 2, ' ', sz - len);
 	ft_lstadd_back(&cargs, ft_lstnew(result));
+	ft_lstadd_back(&sizes, ft_lstnew(&sz));
 }
 
-static void	set_args_fs(t_flags flags, char *args, t_list *cargs)
+static void	set_args_fs(t_flags flags, char *args, t_list *cargs, t_list *sizes)
 {
 	int		len;
 	int		sz;
@@ -84,9 +85,10 @@ static void	set_args_fs(t_flags flags, char *args, t_list *cargs)
 	ft_memmove(result + (sz - len), "0x", 2);
 	ft_memmove(result + (sz - len) + 2, args, len);
 	ft_lstadd_back(&cargs, ft_lstnew(result));
+	ft_lstadd_back(&sizes, ft_lstnew(&sz));
 }
 
-void	ft_print_pointer(t_flags flags, void *args, t_list *cargs)
+void	ft_print_pointer(t_flags flags, void *args, t_list *cargs, t_list *sizes)
 {
 	t_flags					o_flags;
 	char					*sargs;
@@ -103,8 +105,8 @@ void	ft_print_pointer(t_flags flags, void *args, t_list *cargs)
 	else
 		sargs = ft_btoa(dargs, "0123456789abcdef");
 	if (flags.minus)
-		set_args_te(o_flags, sargs, cargs);
+		set_args_te(o_flags, sargs, cargs, sizes);
 	else
-		set_args_fs(o_flags, sargs, cargs);
+		set_args_fs(o_flags, sargs, cargs, sizes);
 	free(sargs);
 }

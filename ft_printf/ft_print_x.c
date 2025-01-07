@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:03:47 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/06 10:43:27 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/07 00:42:05 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static t_flags	override_flags(t_flags flags, char *conv)
 	return (flags);
 }
 
-void	ft_print_x(t_flags flags, unsigned int args, t_list *cargs)
+void	ft_print_x(t_flags flags, unsigned int args, t_list *cargs,
+		t_list *sizes)
 {
 	char	*conv;
 	t_flags	o_flags;
@@ -32,9 +33,9 @@ void	ft_print_x(t_flags flags, unsigned int args, t_list *cargs)
 	if (conv[0] == '0' && o_flags.msize == 0)
 	{
 		o_flags = override_flags(flags, "");
-		ft_print_hex(o_flags, "", cargs, "0x");
+		ft_print_hex(o_flags, "", cargs, "0x", sizes);
 	}
 	else
-		ft_print_hex(o_flags, conv, cargs, "0x");
+		ft_print_hex(o_flags, conv, cargs, "0x", sizes);
 	free(conv);
 }

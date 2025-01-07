@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 08:15:52 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/05 21:31:20 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/06 23:29:52 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_flags	override_flags(t_flags flags, char *conv, int args)
 	return (flags);
 }
 
-void	ft_print_decimal(t_flags flags, int args, t_list *cargs)
+void	ft_print_decimal(t_flags flags, int args, t_list *cargs, t_list *sizes)
 {
 	char	*conv;
 	t_flags	o_flags;
@@ -47,14 +47,14 @@ void	ft_print_decimal(t_flags flags, int args, t_list *cargs)
 	if (conv[0] == '0' && o_flags.msize == 0)
 	{
 		o_flags = override_flags(flags, "", (int)args);
-		ft_print_digit(o_flags, "", cargs);
+		ft_print_digit(o_flags, "", cargs, sizes);
 	}
 	else if (conv[0] == '-')
 	{
 		o_flags = override_flags(flags, &conv[1], (int)args);
-		ft_print_digit(o_flags, &conv[1], cargs);
+		ft_print_digit(o_flags, &conv[1], cargs, sizes);
 	}
 	else
-		ft_print_digit(o_flags, conv, cargs);
+		ft_print_digit(o_flags, conv, cargs, sizes);
 	free(conv);
 }

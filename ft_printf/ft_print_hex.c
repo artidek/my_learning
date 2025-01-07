@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 23:09:35 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/06 21:15:30 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/07 00:46:16 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*print_zero(t_flags flags, char *temp, int len)
 	return (temp);
 }
 
-static void	set_args_te(t_flags flags, char *args, t_list *cargs, char *x)
+static int	set_args_te(t_flags flags, char *args, t_list *cargs, char *x)
 {
 	int		sz;
 	char	*result;
@@ -52,7 +52,7 @@ static void	set_args_te(t_flags flags, char *args, t_list *cargs, char *x)
 	sz = size(args, flags);
 	result = ft_calloc(sizeof(char), sizeof(char) * sz + 1);
 	if (!result)
-		return ;
+		return (0);
 	temp = result;
 	if (flags.hash)
 	{
@@ -69,9 +69,10 @@ static void	set_args_te(t_flags flags, char *args, t_list *cargs, char *x)
 		temp += flags.width;
 	}
 	ft_lstadd_back(&cargs, ft_lstnew(result));
+	return (sz);
 }
 
-static void	set_args_fs(t_flags flags, char *args, t_list *cargs, char *x)
+static int	set_args_fs(t_flags flags, char *args, t_list *cargs, char *x)
 {
 	int		sz;
 	char	*result;
@@ -80,7 +81,7 @@ static void	set_args_fs(t_flags flags, char *args, t_list *cargs, char *x)
 	sz = size(args, flags);
 	result = ft_calloc(sizeof(char), sizeof(char) * sz + 1);
 	if (!result)
-		return ;
+		return (0);
 	temp = result;
 	if (flags.width > 0 && !flags.zero)
 	{
@@ -96,12 +97,24 @@ static void	set_args_fs(t_flags flags, char *args, t_list *cargs, char *x)
 		temp = print_zero(flags, temp, (int)ft_strlen(args));
 	memmove(temp, args, (int)ft_strlen(args));
 	ft_lstadd_back(&cargs, ft_lstnew(result));
+	return (sz);
 }
 
-void	ft_print_hex(t_flags flags, char *conv, t_list *cargs, char *x)
+void	ft_print_hex(t_flags flags, char *conv, t_list *cargs, ...)
 {
+	int		sz;
+	char	*x;
+	t_list	*sizes;
+	va_list	args;
+
+	va_start(args, cargs);
+	x = (char *)va_arg(args, char *);
+	sizes = (t_list *)va_arg(args, t_list *);
+	va_end(args);
+	sz = 0;
 	if (flags.minus)
-		set_args_te(flags, conv, cargs, x);
+		sz = set_args_te(flags, conv, cargs, x);
 	else
-		set_args_fs(flags, conv, cargs, x);
+		sz = set_args_fs(flags, conv, cargs, x);
+	ft_lstadd_back(&sizes, ft_lstnew(&sz));
 }

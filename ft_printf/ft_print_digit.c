@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 19:04:49 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/05 20:59:56 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/07 00:40:04 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*print_zero(t_flags flags, char *temp, int len)
 	return (temp);
 }
 
-static void	set_args_te(t_flags flags, char *args, t_list *cargs)
+static void	set_args_te(t_flags flags, char *args, t_list *cargs, t_list *sizes)
 {
 	int		sz;
 	char	*result;
@@ -69,9 +69,10 @@ static void	set_args_te(t_flags flags, char *args, t_list *cargs)
 		temp += flags.width;
 	}
 	ft_lstadd_back(&cargs, ft_lstnew(result));
+	ft_lstadd_back(&sizes, ft_lstnew(&sz));
 }
 
-static void	set_args_fs(t_flags flags, char *args, t_list *cargs)
+static void	set_args_fs(t_flags flags, char *args, t_list *cargs, t_list *sizes)
 {
 	int		sz;
 	char	*result;
@@ -96,12 +97,13 @@ static void	set_args_fs(t_flags flags, char *args, t_list *cargs)
 		temp = print_zero(flags, temp, (int)ft_strlen(args));
 	memmove(temp, args, (int)ft_strlen(args));
 	ft_lstadd_back(&cargs, ft_lstnew(result));
+	ft_lstadd_back(&sizes, ft_lstnew(&sz));
 }
 
-void	ft_print_digit(t_flags flags, char *conv, t_list *cargs)
+void	ft_print_digit(t_flags flags, char *conv, t_list *cargs, t_list *sizes)
 {
 	if (flags.minus)
-		set_args_te(flags, conv, cargs);
+		set_args_te(flags, conv, cargs, sizes);
 	else
-		set_args_fs(flags, conv, cargs);
+		set_args_fs(flags, conv, cargs, sizes);
 }
