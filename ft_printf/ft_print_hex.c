@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 23:09:35 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/07 23:23:29 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/09 23:26:42 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ static int	size(char *args, t_flags flags)
 	sz = len;
 	if (flags.width > 0)
 		sz = len + flags.width;
-	if (flags.hash)
-		sz += 2;
 	return (sz);
 }
 
 static char	*print_zero(t_flags flags, char *temp, int len)
 {
+	if (flags.hash && flags.width > 0)
+		flags.width -= 2;
 	if (flags.width > 0 && flags.zero)
 	{
 		memset(temp, '0', flags.width);

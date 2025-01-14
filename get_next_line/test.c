@@ -2,21 +2,18 @@
 
 int main ()
 {
-	int i = 10;
 	int fd;
-	char *line = NULL;
+	char *res;
 
-	
-	fd = open ("test.txt", O_RDONLY);
-	line = get_next_line(fd);
-	printf("%s", line);
-	while (i-- > 0)
+	//printf("fucking here");
+	fd = open("41_no_nl", O_RDONLY);
+	res = get_next_line(fd);
+	while (res)
 	{
-		free(line);
-		line = get_next_line(fd);
-		printf("%s\n", line);
+		printf("%s\n", res);
+		free(res);
+		res = get_next_line(fd);
 	}
-	free(line);
 	close(fd);
 	return (0);
 }

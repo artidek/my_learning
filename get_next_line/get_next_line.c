@@ -6,71 +6,83 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:00:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/09 00:12:07 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/14 11:40:48 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*get_line(int fd)
-{
-	static char	*buf;
-	ssize_t		read_count;
-	int			count;
+static ssize_t	read_count = 1;
+static char	*curline = NULL;
 
-	read_count = 1;
-	count = 0;
-	buf = ft_calloc(sizeof(char), sizeof(char) * BUFFER_SIZE + 1);
-	if (!buf)
-		return (NULL);
-	while (count < BUFFER_SIZE && read_count > 0)
-	{
-		read_count = read(fd, &buf[count], 1);
-		if (buf[count] == '\n')
-			break ;
-		if (read_count < 0)
-			return (NULL);
-		count++;
-	}
-	return (buf);
-}
 
-static void	move_offset(int count, int fd)
+static int	move_offset(int fd)
 {
 	char	chr;
-	ssize_t	read_cnt;
+	ssize_t	r_count;
 
-	read_cnt = 1;
+	r_count = 1;
+	r_count = read_count;
 	chr = '\0';
-	while (count < SSIZE_MAX && read_cnt > 0)
+	while (r_count > 0)
 	{
-		read_cnt = read(fd, &chr, 1);
+		r_count = read(fd, &chr, 1);
 		if (chr == '\n')
-			return ;
-		count++;
+			break ;
 	}
+	return (r_count);
+}
+
+static int	get_line(int fd, char **lineptr)
+{
+	int		i;
+	char	chr;
+	ssize_t	r_count;
+	char	*temp;
+	int		size;
+
+	i = 0;
+	r_count = 1;
+	chr = '\0';
+	size = BUFFER_SIZE + 1;
+	alloc_str(size, &lineptr);
+	temp = *lineptr;
+	while (chr != '\n' && r_count > 0)
+	{
+		r_count = read(fd, &chr, 1);
+		if (r_count > 0)
+			temp[i] = chr;
+		else
+			break ;
+		i++;
+		if (i == size && chr != '\n')
+			*lineptr = realloc_str(*lineptr, i);
+		printf("%d %d\n", size , i);
+	}
+	temp[i] = '\0';
+	return (r_count);
 }
 
 char	*get_next_line(int fd)
 {
-	char	*lnstr;
-	int		count;
-	char	*retstr;
+	char	*curline;
+	int		len;
 
-	if (BUFFER_SIZE > SSIZE_MAX)
-		return(NULL);
-	if (!fd)
+	len = 0;
+	curline = NULL;
+	if (fd < 0)
 		return (NULL);
-	lnstr = get_line(fd);
-	if (!lnstr)
+	if (read_count > 0)
+	{
+		read_count = get_line(fd, &curline);
+		len = length(curline);
+	}
+	if (len == 0)
+	{
+		free(curline);
 		return (NULL);
-	count = (int)ft_strlen(lnstr);
-	retstr = ft_calloc(sizeof(char), sizeof(char) * count + 1);
-	if (!retstr)
-		return (NULL);
-	if (lnstr[count - 1] != '\n')
-		move_offset(count, fd);
-	ft_strlcpy(retstr, lnstr, count);
-	free(lnstr);
-	return (retstr);
+	}
+	if (curline[len - 1] != '\n')
+		read_count = move_offset(fd);
+	return (curline);
 }

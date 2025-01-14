@@ -6,7 +6,7 @@
 #    By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/08 14:02:33 by aobshatk          #+#    #+#              #
-#    Updated: 2025/01/08 23:15:21 by aobshatk         ###   ########.fr        #
+#    Updated: 2025/01/13 14:13:40 by aobshatk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,10 @@ NAME 			= get_next_line.a
 CC 	  			= cc
 FLAGS 			= -Wall -Wextra -Werror
 RM				= rm -f
+BUFFER_SIZE		?= 4096
 
 %.o: %.c 
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -DBUFFER_SIZE=$(BUFFER_SIZE) -c $< -o $@
 
 $(NAME): $(OBJS)
 		ar rcs $(NAME) $(OBJS)

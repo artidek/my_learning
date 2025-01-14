@@ -1,18 +1,25 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
 # include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 4096
 # endif
-# define SSIZE_MAX 2147483647
 
-void	*ft_calloc(size_t nmemb, size_t size);
-char	*get_next_line(int fd);
-size_t	ft_strlen(const char *str);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+# define SSIZE_MAX
+
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}					t_list;
+
+char				*get_next_line(int fd);
+int					length(char *str);
+void				*ft_memmove(void *s1, const void *s2, size_t n);
+int					realloc_str(char ***str, int size);
 #endif

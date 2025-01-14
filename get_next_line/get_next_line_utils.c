@@ -5,65 +5,73 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/08 21:14:02 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/08 23:09:23 by aobshatk         ###   ########.fr       */
+/*   Created: 2025/01/13 13:49:03 by aobshatk          #+#    #+#             */
+/*   Updated: 2025/01/13 23:35:42 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <limits.h>
 
-void	*ft_calloc(size_t nmemb, size_t size)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	unsigned char	*retptr;
-	unsigned int	i;
+	unsigned char	ch;
+	unsigned char	*ptr;
 
-	i = 0;
-	if (nmemb == 0 || size == 0)
-		return (retptr = malloc(sizeof(unsigned char) * 1));
-	if (nmemb == INT_MAX || size == INT_MAX || (int)nmemb < 0 || (int)size < 0)
+	ch = (unsigned char)c;
+	ptr = (unsigned char *)s;
+	while (n > 0)
 	{
-		write(1, "Memory allocation failed: ENOMEM\n", 30);
-		return (NULL);
+		*ptr++ = ch;
+		n--;
 	}
-	retptr = malloc(nmemb * size);
-	while (i < nmemb * size)
+	return (s);
+}
+void	*ft_memcpy(void *restrict s1, const void *restrict s2, size_t n)
+{
+	unsigned char		*ptr;
+	const unsigned char	*ptr2;
+	size_t				i;
+
+	ptr = (unsigned char *)s1;
+	ptr2 = (const unsigned char *)s2;
+	if (!s1 && !s2)
+		return (0);
+	i = 0;
+	while (i < n)
 	{
-		retptr[i] = 0;
+		ptr[i] = ptr2[i];
 		i++;
 	}
-	return (retptr);
+	return (s1);
 }
 
-size_t	ft_strlen(const char *str)
+int length(char *str)
 {
-	size_t	result;
+	int	len;
 
-	result = 0;
-	while (str[result])
-		result++;
-	return (result);
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+int	realloc_str(char ***str, int size)
 {
-	size_t	i;
+	char	*temp;
+	char	*cp;
 
-	i = 0;
-	if (dstsize == 0)
-	{
-		while (src[i])
-			i++;
-		return (i);
-	}
-	while (i < dstsize - 1 && src[i] != '\0')
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	if (i < dstsize)
-		dst[i] = '\0';
-	while (src[i] != '\0')
-		i++;
-	return (i);
+	temp = malloc(sizeof(char) * size);
+	if (!temp)
+		return (0);
+	ft_memset(temp, 0, size);
+	cp = **str;
+	ft_memcpy(temp, cp, size);
+	free(**str);
+	**str = malloc(sizeof(char) * (size * 2));
+	if (!**str)
+		return (0);
+	ft_memset(**str, 0, size);
+	ft_memcpy(**str,temp, size);
+	free(temp);
+	return (size * 2);
 }
