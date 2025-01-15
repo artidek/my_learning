@@ -6,13 +6,16 @@
 #    By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/08 14:02:33 by aobshatk          #+#    #+#              #
-#    Updated: 2025/01/13 14:13:40 by aobshatk         ###   ########.fr        #
+#    Updated: 2025/01/15 12:34:24 by aobshatk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS 			= get_next_line.c get_next_line_utils.c
 OBJS 			= $(SRCS:.c=.o)
+BSRCS			= get_next_line_bonus.c get_next_line_utils_bonus.c
+BOBJS			= $(BSRCS:.c=.o)
 NAME 			= get_next_line.a
+BNAME			= get_next_line_bonus.a
 
 CC 	  			= cc
 FLAGS 			= -Wall -Wextra -Werror
@@ -25,14 +28,19 @@ BUFFER_SIZE		?= 4096
 $(NAME): $(OBJS)
 		ar rcs $(NAME) $(OBJS)
 
-all:		$(NAME)
+$(BNAME): $(BOBJS)
+		ar rcs $(BNAME) $(BOBJS)
+
+all:		bonus $(NAME)
+
+bonus:		$(BNAME)
 
 clean:		
-	 $(RM) $(OBJS)
+	 $(RM) $(OBJS) $(BOBJS)
 
 fclean:		clean
-			$(RM) $(NAME)
+			$(RM) $(NAME) $(BNAME)
 				
-re:			fclean $(NAME)
+re:			fclean $(NAME) $(BNAME)
 
-.PHONY:		 all clean fclean re
+.PHONY:		 all bonus clean fclean re

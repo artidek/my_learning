@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 13:49:03 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/14 18:37:09 by aobshatk         ###   ########.fr       */
+/*   Created: 2025/01/15 11:42:28 by aobshatk          #+#    #+#             */
+/*   Updated: 2025/01/15 11:43:37 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	*ft_memset(void *s, int c, size_t n)
 {
@@ -27,7 +27,7 @@ void	*ft_memset(void *s, int c, size_t n)
 	return (s);
 }
 
-void	*ft_memcpy(void * s1, const void *s2, size_t n)
+void	*ft_memcpy(void *s1, const void *s2, size_t n)
 {
 	unsigned char		*ptr;
 	const unsigned char	*ptr2;

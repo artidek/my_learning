@@ -19,7 +19,8 @@ typedef struct s_list
 }					t_list;
 
 char				*get_next_line(int fd);
+char				*realloc_str(char *str, int size);
 int					length(char *str);
-void				*ft_memmove(void *s1, const void *s2, size_t n);
-int					realloc_str(char ***str, int size);
+void				*ft_memcpy(void *s1, const void *s2, size_t n);
+void				*ft_memset(void *s, int c, size_t n);
 #endif

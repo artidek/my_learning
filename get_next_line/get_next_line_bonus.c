@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/08 12:00:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/14 21:42:39 by aobshatk         ###   ########.fr       */
+/*   Created: 2025/01/15 11:19:47 by aobshatk          #+#    #+#             */
+/*   Updated: 2025/01/15 13:41:45 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-static ssize_t	read_count = 1;
-static char	*curline = NULL;
+static char		*curline = NULL;
 
 static int	mem_add(int size)
 {
@@ -32,22 +31,21 @@ static int	mem_add(int size)
 
 void	check_count(ssize_t r_count, int i, char **curline)
 {
-	char *temp;
+	char	*temp;
 
 	temp = *curline;
 	if (r_count < 0)
 	{
 		free(temp);
-		return;
+		return ;
 	}
 	if (i == 0)
 	{
 		free(temp);
 		*curline = NULL;
-		return;
+		return ;
 	}
 	temp[i] = '\0';
-
 }
 
 static int	get_line(int fd, int size)
@@ -65,7 +63,7 @@ static int	get_line(int fd, int size)
 		if (r_count > 0)
 			curline[i] = chr;
 		else
-			break;
+			break ;
 		i++;
 		if (i == size - 1 && chr != '\n')
 			size = mem_add(i);
@@ -79,8 +77,10 @@ static int	get_line(int fd, int size)
 char	*get_next_line(int fd)
 {
 	int	size;
+	int	read_count;
 
 	size = 0;
+	read_count = 1;
 	if (fd < 0)
 		return (NULL);
 	if (read_count > 0)
