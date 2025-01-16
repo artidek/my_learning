@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:49:03 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/14 18:37:09 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/16 14:47:14 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*ft_memset(void *s, int c, size_t n)
 	return (s);
 }
 
-void	*ft_memcpy(void * s1, const void *s2, size_t n)
+void	*ft_memcpy(void *s1, const void *s2, size_t n)
 {
 	unsigned char		*ptr;
 	const unsigned char	*ptr2;
@@ -55,4 +55,22 @@ char	*realloc_str(char *str, int size)
 		return (NULL);
 	ft_memcpy(temp, str, size);
 	return (temp);
+}
+
+int	*ft_memchr(const void *s, int c, size_t n)
+{
+	unsigned char	ch;
+	int	i;
+
+	ch = c;
+	i = 0;
+	while (n > 0)
+	{
+		if (*(unsigned char *)s == ch)
+			return (i);
+		s++;
+		i++;
+		n--;
+	}
+	return (0);
 }

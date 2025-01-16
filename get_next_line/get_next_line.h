@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/16 10:55:49 by aobshatk          #+#    #+#             */
+/*   Updated: 2025/01/16 14:51:52 by aobshatk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
@@ -23,4 +35,5 @@ char				*realloc_str(char *str, int size);
 int					length(char *str);
 void				*ft_memcpy(void *s1, const void *s2, size_t n);
 void				*ft_memset(void *s, int c, size_t n);
+int					*ft_memchr(const void *s, int c, size_t n);
 #endif
