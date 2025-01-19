@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 10:55:49 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/16 14:51:52 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/17 20:21:59 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@
 
 typedef struct s_list
 {
-	void			*content;
+	char			*content;
 	struct s_list	*next;
 }					t_list;
 
 char				*get_next_line(int fd);
-char				*realloc_str(char *str, int size);
-int					length(char *str);
-void				*ft_memcpy(void *s1, const void *s2, size_t n);
-void				*ft_memset(void *s, int c, size_t n);
-int					*ft_memchr(const void *s, int c, size_t n);
+void				ft_lstadd_back(t_list **lst, t_list *new);
+t_list				*ft_lstnew(char *content);
+void				ft_lstclear(t_list **lst);
+int					lststrlen(t_list *next_line);
+t_list				*check_nl(t_list *next_line);
 #endif

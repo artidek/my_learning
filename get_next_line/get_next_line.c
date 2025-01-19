@@ -3,103 +3,136 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:00:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/16 17:23:40 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/19 12:02:13 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*g_curline = NULL;
-
-static int	mem_add(int size)
+static void	clear_list(t_list **next_line)
 {
-	char	*temp;
-
-	temp = realloc_str(g_curline, size);
-	free(g_curline);
-	g_curline = malloc((size * 2) + 1);
-	if (!g_curline)
-		return (0);
-	ft_memset(g_curline, 0, (size * 2) + 1);
-	ft_memcpy(g_curline, temp, size);
-	free(temp);
-	return ((size * 2) + 1);
-}
-
-static void	extract_line(char **retstr, int i, ssize_t r_count)
-{
-	int	line_len;
-
-	line_len = 0;
-	if (i + 1 < r_count)
-		line_len = (int)r_count - ((int)r_count - i);
-	else
-		line_len = r_count;
-	*retstr = malloc(line_len + 1);
-	if (!*retstr)
-		return ;
-	ft_memcpy(*retstr, g_curline, line_len);
-}
-
-void	check_count(ssize_t r_count, int i, char **curline)
-{
-	char	*temp;
-
-	temp = *curline;
-	if (r_count < 0)
-	{
-		free(temp);
-		return ;
-	}
-	if (r_count == 0)
-	{
-		free(temp);
-		*curline = NULL;
-		return ;
-	}
-	temp[i] = '\0';
-}
-
-static int	get_line(int fd, int size, char **retstr)
-{
+	t_list	*tmp_lst;
+	char	*cntnt;
+	int		pos;
 	int		i;
-	ssize_t	r_count;
+	char	*temp;
 
 	i = 0;
-	r_count = 1;
-	while (r_count > 0)
-		r_count = read(fd, g_curline, BUFFER_SIZE);
-	check_count(r_count, i, &g_curline);
-	if (r_count <= 0)
-		return (r_count);
-	return (r_count);
+	tmp_lst = check_nl(*next_line);
+	if (!tmp_lst)
+	{
+		ft_lstclear(&(*next_line));
+		*next_line = NULL;
+		return;
+	}
+	temp = malloc(BUFFER_SIZE + 1);
+	pos = lststrlen(tmp_lst);
+	cntnt = tmp_lst->content;
+	cntnt += (pos + 1);
+	while (*cntnt && temp)
+		temp[i ++] = *cntnt++;
+	temp[i] = '\0';
+	ft_lstclear(&(*next_line));
+	*next_line = ft_lstnew(temp);
+	free(temp);
+}
+
+static void	extract_str(t_list *temp, char **curline)
+{
+	int		len;
+	int		i;
+	int		j;
+	char	*cntnt;
+
+	len = lststrlen(temp);
+	i = 0;
+	j = 0;
+	*curline = malloc(len + 1);
+	while (temp && *curline)
+	{
+		cntnt = temp->content;
+		if (cntnt[i] == '\n')
+			(*curline)[j] = cntnt[i];
+		while (cntnt[i] && cntnt[i] != '\n')
+		{
+			(*curline)[j ++] = cntnt[i ++];
+		}
+		i = 0;
+		temp = temp->next;
+	}
+	if (*curline)
+		(*curline)[len] = '\0';
+}
+
+static void	get_line(int fd, t_list **next_line)
+{
+	int	read_count;
+	char	*temp;
+
+	read_count = 0;
+	temp = NULL;
+	if (!*next_line)
+		return ;
+	while (!check_nl(*next_line))
+	{
+		temp = malloc(BUFFER_SIZE + 1);
+		if (!temp)
+			return ;
+		read_count = read(fd, temp, BUFFER_SIZE);
+		if (!read_count)
+		{
+			free(temp);
+			return;
+		}
+		temp[read_count] = '\0';
+		ft_lstadd_back(&(*next_line), ft_lstnew(temp));
+		free(temp);
+	}
+}
+
+static t_list	*init_list(int fd)
+{
+	t_list	*int_lst;
+	char	*temp;
+	int		read_count;
+
+	int_lst = NULL;
+	temp = NULL;
+	read_count = 0;
+	temp = malloc(BUFFER_SIZE + 1);
+	if (!temp)
+		return (NULL);
+	read_count = read(fd, temp, BUFFER_SIZE);
+	if (!read_count)
+	{
+		free(temp);
+		return (NULL);
+	}
+	temp[read_count] = '\0';
+	int_lst = ft_lstnew(temp);
+	free(temp);
+	return (int_lst);
 }
 
 char	*get_next_line(int fd)
 {
-	int		read_count;
-	int		size;
-	char	*retstr;
+	static t_list	*next_line = NULL;
+	char			*curline;
 
-	read_count = 1;
-	size = 0;
-	retstr = NULL;
+	curline = NULL;
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	if (read_count > 0)
-	{
-		size = BUFFER_SIZE + 1;
-		g_curline = malloc(size);
-		if (!g_curline)
-			return (NULL);
-		read_count = get_line(fd, size, &retstr);
-	}
-	else
-		g_curline = NULL;
-	if (read_count < 0)
+	if (!next_line)
+		next_line = init_list(fd);
+	get_line(fd, &next_line);
+	if (!next_line)
 		return (NULL);
-	return (retstr);
+	extract_str(next_line, &curline);
+	clear_list(&next_line);
+	if (!curline)
+		return (NULL);
+	return (curline);
 }

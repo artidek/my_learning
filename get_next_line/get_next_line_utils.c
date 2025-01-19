@@ -3,74 +3,126 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:49:03 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/16 14:47:14 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/19 12:01:30 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_memset(void *s, int c, size_t n)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	unsigned char	ch;
-	unsigned char	*ptr;
+	t_list	*temp;
 
-	ch = (unsigned char)c;
-	ptr = (unsigned char *)s;
-	while (n > 0)
+	if (!new)
+		return ;
+	if (!*lst)
 	{
-		*ptr++ = ch;
-		n--;
+		*lst = new;
+		return ;
 	}
-	return (s);
+	temp = *lst;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new;
 }
 
-void	*ft_memcpy(void *s1, const void *s2, size_t n)
+t_list	*ft_lstnew(char *cont)
 {
-	unsigned char		*ptr;
-	const unsigned char	*ptr2;
-	size_t				i;
-
-	ptr = (unsigned char *)s1;
-	ptr2 = (const unsigned char *)s2;
-	if (!s1 && !s2)
-		return (0);
-	i = 0;
-	while (i < n)
-	{
-		ptr[i] = ptr2[i];
-		i++;
-	}
-	return (s1);
-}
-
-char	*realloc_str(char *str, int size)
-{
-	char	*temp;
-
-	temp = malloc(size);
-	if (!temp)
-		return (NULL);
-	ft_memcpy(temp, str, size);
-	return (temp);
-}
-
-int	*ft_memchr(const void *s, int c, size_t n)
-{
-	unsigned char	ch;
+	t_list	*new_lst;
+	int	len;
+	char	*cntnt;
 	int	i;
 
-	ch = c;
+	len = 0;
+	cntnt = NULL;
 	i = 0;
-	while (n > 0)
+	new_lst = (t_list *)malloc(sizeof(t_list) * 1);
+	if (new_lst == NULL)
+		return (NULL);
+	while (cont[len])
+		len++;
+	cntnt = malloc(len + 1);
+	if (!cntnt)
+		return (NULL);
+	while (cont[i])
 	{
-		if (*(unsigned char *)s == ch)
-			return (i);
-		s++;
+		cntnt[i] = cont[i];
 		i++;
-		n--;
 	}
-	return (0);
+	cntnt[len] = '\0';
+	new_lst->content = cntnt;
+	new_lst->next = NULL;
+	return (new_lst);
+}
+
+void	ft_lstclear(t_list **lst)
+{
+	t_list	*temp;
+
+	if (!lst)
+		return ;
+	while (*lst)
+	{
+		temp = (*lst)->next;
+		if ((*lst)->content)
+			free((*lst)->content);
+		free(*lst);
+		*lst = temp;
+	}
+}
+
+int	lststrlen(t_list *next_line)
+{
+	int		len;
+	int		i;
+	char	*contnt;
+	int	a = 0;
+
+	len = 0;
+	i = 0;
+	while (next_line)
+	{
+		contnt = next_line->content;
+		while (contnt[i] != '\n' && contnt[i])
+		{
+			i++;
+			len++;
+		}
+		if (contnt[i] == '\n')
+		{
+			//len++;
+			break ;
+		}
+		a++;
+		next_line = next_line->next;
+		i = 0;
+	}
+	return (len);
+}
+
+t_list	*check_nl(t_list *next_line)
+{
+	int		pos;
+	char	*cntnt;
+
+	pos = 0;
+	if (!next_line)
+		return (NULL);
+	while (next_line)
+	{
+		cntnt = next_line->content;
+		while(cntnt[pos] != '\n' && cntnt[pos])
+			pos++;
+		if (cntnt[pos] == '\n')
+		{
+			pos++;
+			return (next_line);
+		}
+		pos = 0;
+		next_line = next_line->next;
+	}
+	return (NULL);
 }

@@ -1,4 +1,4 @@
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 int main(void)
 {
@@ -7,7 +7,7 @@ int main(void)
 	res = get_next_line(0);
 	while(res)
 	{
-		printf("%s\n", res);
+		printf("%s", res);
 		free(res);
 		res = get_next_line(0);
 	}
