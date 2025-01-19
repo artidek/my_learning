@@ -6,11 +6,12 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:00:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/19 12:02:13 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:18:16 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <string.h>
 
 static void	clear_list(t_list **next_line)
 {
@@ -31,7 +32,7 @@ static void	clear_list(t_list **next_line)
 	temp = malloc(BUFFER_SIZE + 1);
 	pos = lststrlen(tmp_lst);
 	cntnt = tmp_lst->content;
-	cntnt += (pos + 1);
+	cntnt += pos;
 	while (*cntnt && temp)
 		temp[i ++] = *cntnt++;
 	temp[i] = '\0';
@@ -47,6 +48,8 @@ static void	extract_str(t_list *temp, char **curline)
 	int		j;
 	char	*cntnt;
 
+	if (!temp)
+		return;
 	len = lststrlen(temp);
 	i = 0;
 	j = 0;
@@ -54,12 +57,10 @@ static void	extract_str(t_list *temp, char **curline)
 	while (temp && *curline)
 	{
 		cntnt = temp->content;
+		while (cntnt[i] && cntnt[i] != '\n')
+			(*curline)[j ++] = cntnt[i ++];
 		if (cntnt[i] == '\n')
 			(*curline)[j] = cntnt[i];
-		while (cntnt[i] && cntnt[i] != '\n')
-		{
-			(*curline)[j ++] = cntnt[i ++];
-		}
 		i = 0;
 		temp = temp->next;
 	}
@@ -82,7 +83,7 @@ static void	get_line(int fd, t_list **next_line)
 		if (!temp)
 			return ;
 		read_count = read(fd, temp, BUFFER_SIZE);
-		if (!read_count)
+		if (read_count <= 0)
 		{
 			free(temp);
 			return;
@@ -106,7 +107,7 @@ static t_list	*init_list(int fd)
 	if (!temp)
 		return (NULL);
 	read_count = read(fd, temp, BUFFER_SIZE);
-	if (!read_count)
+	if (read_count <= 0)
 	{
 		free(temp);
 		return (NULL);
@@ -127,12 +128,17 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!next_line)
 		next_line = init_list(fd);
-	get_line(fd, &next_line);
 	if (!next_line)
 		return (NULL);
+	get_line(fd, &next_line);
 	extract_str(next_line, &curline);
 	clear_list(&next_line);
 	if (!curline)
 		return (NULL);
+	if (!*curline)
+	{
+		free(curline);
+		return (NULL);
+	}		
 	return (curline);
 }

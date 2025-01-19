@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:49:03 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/19 12:01:30 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:17:27 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	lststrlen(t_list *next_line)
 		}
 		if (contnt[i] == '\n')
 		{
-			//len++;
+			len++;
 			break ;
 		}
 		a++;
