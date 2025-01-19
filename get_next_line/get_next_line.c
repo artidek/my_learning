@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:00:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/19 16:40:14 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/19 17:48:28 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,15 @@ static void	clear_list(t_list **next_line)
 	{
 		ft_lstclear(&(*next_line));
 		*next_line = NULL;
-		return;
+		return ;
 	}
 	temp = malloc(BUFFER_SIZE + 1);
 	pos = lststrlen(tmp_lst);
 	cntnt = tmp_lst->content;
 	cntnt += pos;
 	while (*cntnt && temp)
-		temp[i ++] = *cntnt++;
+		temp[i++] = *cntnt++;
 	temp[i] = '\0';
-	free(((*next_line)->content));
 	ft_lstclear(&(*next_line));
 	*next_line = ft_lstnew(temp);
 	free(temp);
@@ -50,7 +49,7 @@ static void	extract_str(t_list *temp, char **curline)
 	char	*cntnt;
 
 	if (!temp)
-		return;
+		return ;
 	len = lststrlen(temp);
 	i = 0;
 	j = 0;
@@ -59,7 +58,7 @@ static void	extract_str(t_list *temp, char **curline)
 	{
 		cntnt = temp->content;
 		while (cntnt[i] && cntnt[i] != '\n')
-			(*curline)[j ++] = cntnt[i ++];
+			(*curline)[j++] = cntnt[i++];
 		if (cntnt[i] == '\n')
 			(*curline)[j] = cntnt[i];
 		i = 0;
@@ -71,26 +70,30 @@ static void	extract_str(t_list *temp, char **curline)
 
 static void	get_line(int fd, t_list **next_line)
 {
-	int	read_count;
+	int		read_count;
 	char	*temp;
+	t_list	*temp_lt;
 
 	read_count = 0;
 	temp = NULL;
 	if (!*next_line)
 		return ;
-	temp = malloc(BUFFER_SIZE + 1);
-	while (!check_nl(*next_line))
+	temp_lt = *next_line;
+	while (!check_nl(temp_lt))
 	{
+		temp = malloc(BUFFER_SIZE + 1);
 		if (!temp)
 			return ;
 		read_count = read(fd, temp, BUFFER_SIZE);
 		if (read_count <= 0)
 		{
 			free(temp);
-			return;
+			return ;
 		}
 		temp[read_count] = '\0';
 		ft_lstadd_back(&(*next_line), ft_lstnew(temp));
+		temp_lt = temp_lt->next;
+		free(temp);
 	}
 }
 
@@ -114,6 +117,7 @@ static t_list	*init_list(int fd)
 	}
 	temp[read_count] = '\0';
 	int_lst = ft_lstnew(temp);
+	free(temp);
 	return (int_lst);
 }
 
@@ -138,6 +142,6 @@ char	*get_next_line(int fd)
 	{
 		free(curline);
 		return (NULL);
-	}		
+	}
 	return (curline);
 }
