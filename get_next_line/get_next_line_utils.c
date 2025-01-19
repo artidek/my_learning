@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:49:03 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/19 16:17:27 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:41:44 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,11 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 t_list	*ft_lstnew(char *cont)
 {
 	t_list	*new_lst;
-	int	len;
-	char	*cntnt;
-	int	i;
 
-	len = 0;
-	cntnt = NULL;
-	i = 0;
 	new_lst = (t_list *)malloc(sizeof(t_list) * 1);
 	if (new_lst == NULL)
 		return (NULL);
-	while (cont[len])
-		len++;
-	cntnt = malloc(len + 1);
-	if (!cntnt)
-		return (NULL);
-	while (cont[i])
-	{
-		cntnt[i] = cont[i];
-		i++;
-	}
-	cntnt[len] = '\0';
-	new_lst->content = cntnt;
+	new_lst->content = cont;
 	new_lst->next = NULL;
 	return (new_lst);
 }

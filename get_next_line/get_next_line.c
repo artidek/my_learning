@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:00:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/19 16:18:16 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:40:14 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	clear_list(t_list **next_line)
 	while (*cntnt && temp)
 		temp[i ++] = *cntnt++;
 	temp[i] = '\0';
+	free(((*next_line)->content));
 	ft_lstclear(&(*next_line));
 	*next_line = ft_lstnew(temp);
 	free(temp);
@@ -77,9 +78,9 @@ static void	get_line(int fd, t_list **next_line)
 	temp = NULL;
 	if (!*next_line)
 		return ;
+	temp = malloc(BUFFER_SIZE + 1);
 	while (!check_nl(*next_line))
 	{
-		temp = malloc(BUFFER_SIZE + 1);
 		if (!temp)
 			return ;
 		read_count = read(fd, temp, BUFFER_SIZE);
@@ -90,7 +91,6 @@ static void	get_line(int fd, t_list **next_line)
 		}
 		temp[read_count] = '\0';
 		ft_lstadd_back(&(*next_line), ft_lstnew(temp));
-		free(temp);
 	}
 }
 
@@ -114,7 +114,6 @@ static t_list	*init_list(int fd)
 	}
 	temp[read_count] = '\0';
 	int_lst = ft_lstnew(temp);
-	free(temp);
 	return (int_lst);
 }
 
