@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 10:55:49 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/22 16:47:52 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/20 16:34:40 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ typedef struct s_list
 	char			*content;
 	struct s_list	*next;
 }					t_list;
-typedef struct s_files
+typedef struct ds_list
 {
 	int				fd;
-	t_list			*t_list;
-	struct s_files	*next;
-}					t_files;
+	struct s_list	*t_list;
+	struct ds_list	*next;
+}					d_list;
 
 char				*get_next_line(int fd);
 void				clear_list(t_list **next_line);
@@ -44,5 +44,6 @@ void				ft_lstclear(t_list **lst);
 t_list				*init_list(int fd);
 t_list				*ft_lstnew(char *cont);
 t_list				*check_nl(t_list *next_line);
+int					find_fd(d_list *files);
 int					lststrlen(t_list *next_line);
 #endif

@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:49:03 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/22 21:12:40 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:17:27 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,10 @@ void	ft_lstclear(t_list **lst)
 	{
 		temp = (*lst)->next;
 		if ((*lst)->content)
-		{
 			free((*lst)->content);
-			(*lst)->content = NULL;
-		}
 		free(*lst);
 		*lst = temp;
 	}
-	*lst = NULL;
 }
 
 int	lststrlen(t_list *next_line)

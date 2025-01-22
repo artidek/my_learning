@@ -14,7 +14,7 @@ int	main(void)
 	int				ready;
 	struct pollfd	*pfds;
 	nfds_t			num_open_fds, nfds;
-	char *files[5] = {"41_no_nl", "41_with_nl", "alternate_line_nl_no_nl", "empty", "multiple_line_no_nl"};
+	char *files[5] = {"files/41_no_nl", "files/41_with_nl", "files/alternate_line_nl_no_nl", "files/empty", "files/multiple_line_no_nl"};
 	char *res;
 
 	num_open_fds = nfds = 5;
@@ -42,12 +42,12 @@ int	main(void)
 					res = get_next_line(pfds[j].fd);
 					if (res)
 					{
-						printf("%s\n", res);
+						printf("fd - %d %s\n", pfds[j].fd, res);
 						free(res);
 					}
 					else
 					{
-						printf("closing filen %d\n", pfds[j].fd);
+						//printf("closing file %d\n", pfds[j].fd);
 						if (close(pfds[j].fd) == -1)
 							errExit("close");
 						num_open_fds--;
