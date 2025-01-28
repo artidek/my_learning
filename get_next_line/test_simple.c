@@ -10,7 +10,7 @@ int main (void)
 	res = get_next_line(fd);
 	while(res)
 	{
-		//printf("%s", res);
+		printf("%s", res);
 		free(res);
 		res = get_next_line(fd);
 	}

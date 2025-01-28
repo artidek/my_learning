@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 10:55:49 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/20 10:08:26 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/28 19:44:18 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # include <fcntl.h>
+# include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -21,23 +22,12 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 4096
 # endif
+# define FD_MAX 4096
 
-typedef struct s_list
-{
-	char			*content;
-	struct s_list	*next;
-}					t_list;
-typedef struct ds_list
-{
-	int				*fd;
-	struct s_list	*t_list;
-	struct ds_list	*next;
-}					d_list;
-
-char				*get_next_line(int fd);
-void				ft_lstadd_back(t_list **lst, t_list *new);
-void				ft_lstclear(t_list **lst);
-t_list				*ft_lstnew(char *content);
-t_list				*check_nl(t_list *next_line);
-int					lststrlen(t_list *next_line);
+char	*get_next_line(int fd);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strdup(const char *s);
+char	*ft_strchr(const char *str, int ch);
+void	*ft_calloc(size_t nmemb, size_t size);
+size_t	ft_strlen(const char *str);
 #endif

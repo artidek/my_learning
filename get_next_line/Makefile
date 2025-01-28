@@ -6,14 +6,12 @@
 #    By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/08 14:02:33 by aobshatk          #+#    #+#              #
-#    Updated: 2025/01/20 13:20:25 by aobshatk         ###   ########.fr        #
+#    Updated: 2025/01/28 19:53:42 by aobshatk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS 			= get_next_line.c get_next_line_utils.c
+SRCS 			= get_next_line_utils.c get_next_line_utils_bonus.c get_next_line_bonus.c get_next_line.c
 OBJS 			= $(SRCS:.c=.o)
-BSRCS			= get_next_line_bonus.c get_next_line_utils_bonus.c get_next_line_utils.c
-BOBJS			= $(BSRCS:.c=.o)
 NAME 			= get_next_line.a
 
 CC 	  			= cc
@@ -25,13 +23,12 @@ BUFFER_SIZE		?= 4096
 	$(CC) $(FLAGS) -DBUFFER_SIZE=$(BUFFER_SIZE) -c $< -o $@
 
 $(NAME): $(OBJS)
-		ar rcs $(NAME) $(OBJS)
+		ar rcs $(NAME) $(OBJS) $(BOBJS)
 
 
 all:		$(NAME)
 
-bonus:	$(BOBJS)
-	ar rcs $(NAME) $(BOBJS)
+bonus:		$(NAME)
 
 clean:		
 	 $(RM) $(OBJS) $(BOBJS)
@@ -39,6 +36,6 @@ clean:
 fclean:		clean
 			$(RM) $(NAME) 
 				
-re:			fclean $(NAME) bonus
+re:			fclean $(NAME) 
 
-.PHONY:		 all bonus clean fclean re
+.PHONY:		 all clean fclean re

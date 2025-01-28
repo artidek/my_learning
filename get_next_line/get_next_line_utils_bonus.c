@@ -6,117 +6,83 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:49:03 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/22 23:53:05 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/28 20:23:51 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-void	clear_list(t_list **next_line)
+size_t	ft_strlen(const char *str)
 {
-	t_list	*tmp_lst;
-	char	*cntnt;
-	int		pos;
-	int		i;
-	char	*temp;
+	size_t	result;
 
-	i = 0;
-	tmp_lst = check_nl(*next_line);
-	if (!tmp_lst)
-	{
-		ft_lstclear(&(*next_line));
-		*next_line = NULL;
-		return ;
-	}
-	temp = malloc(BUFFER_SIZE + 1);
-	pos = lststrlen(tmp_lst);
-	cntnt = tmp_lst->content;
-	cntnt += pos;
-	while (*cntnt && temp)
-		temp[i++] = *cntnt++;
-	temp[i] = '\0';
-	ft_lstclear(&(*next_line));
-	*next_line = NULL;
-	*next_line = ft_lstnew(temp);
-	free(temp);
+	result = 0;
+	while (str[result])
+		result++;
+	return (result);
 }
 
-void	extract_str(t_list *temp, char **curline)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
+	char	*jstr;
+	char	*temp;
 	int		len;
-	int		i;
-	int		j;
-	char	*cntnt;
+	int		len_s1;
+	int		len_s2;
 
-	if (!temp)
-		return ;
-	len = lststrlen(temp);
-	i = 0;
-	j = 0;
-	*curline = malloc(len + 1);
-	while (temp && *curline)
-	{
-		cntnt = temp->content;
-		while (cntnt[i] && cntnt[i] != '\n')
-			(*curline)[j++] = cntnt[i++];
-		if (cntnt[i] == '\n')
-			(*curline)[j] = cntnt[i];
-		i = 0;
-		temp = temp->next;
-	}
-	if (*curline)
-		(*curline)[len] = '\0';
+	len_s1 = 0;
+	len_s2 = 0;
+	while (s1[len_s1])
+		len_s1++;
+	while (s2[len_s2])
+		len_s2++;
+	len = len_s1 + len_s2;
+	jstr = malloc(sizeof(char) * len + 1);
+	if (jstr == NULL)
+		return (NULL);
+	temp = jstr;
+	while (*s1)
+		*temp++ = *s1++;
+	while (*s2)
+		*temp++ = *s2++;
+	*temp = '\0';
+	return (jstr);
 }
 
-void	get_line(int fd, t_list **next_line)
+char	*ft_strdup(const char *s)
 {
-	int		read_count;
-	char	*temp;
-	t_list	*temp_lt;
+	char	*dup;
+	char	*temdup;
+	int		len;
 
-	read_count = 0;
-	temp = NULL;
-	if (!*next_line)
-		return ;
-	temp_lt = *next_line;
-	while (!check_nl(temp_lt))
+	len = 0;
+	while (s[len])
+		len++;
+	dup = malloc(sizeof(char) * len + 1);
+	if (dup == NULL)
 	{
-		temp = malloc(BUFFER_SIZE + 1);
-		if (!temp)
-			return ;
-		read_count = read(fd, temp, BUFFER_SIZE);
-		if (read_count <= 0)
-		{
-			free(temp);
-			return ;
-		}
-		temp[read_count] = '\0';
-		ft_lstadd_back(&(*next_line), ft_lstnew(temp));
-		temp_lt = temp_lt->next;
-		free(temp);
+		write(1, "Memory allocation failed: ENOMEM\n", 30);
+		return (NULL);
 	}
+	temdup = dup;
+	while (*s)
+		*temdup++ = *s++;
+	*temdup = '\0';
+	return (dup);
 }
 
-t_list	*init_list(int fd)
+char	*ft_strchr(const char *str, int ch)
 {
-	t_list	*int_lst;
-	char	*temp;
-	int		read_count;
+	char	cmp;
 
-	int_lst = NULL;
-	temp = NULL;
-	read_count = 0;
-	temp = malloc(BUFFER_SIZE + 1);
-	if (!temp)
-		return (NULL);
-	read_count = read(fd, temp, BUFFER_SIZE);
-	if (read_count <= 0)
+	cmp = ch;
+	while (*str)
 	{
-		free(temp);
-		return (NULL);
+		if (*str == cmp)
+			return ((char *)str);
+		str++;
 	}
-	temp[read_count] = '\0';
-	int_lst = ft_lstnew(temp);
-	free(temp);
-	return (int_lst);
+	if (*str == ch)
+		return ((char *)str);
+	return (NULL);
 }

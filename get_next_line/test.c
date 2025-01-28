@@ -1,4 +1,4 @@
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 #include <fcntl.h>
 #include <poll.h>
 #include <stdio.h>
@@ -14,10 +14,10 @@ int	main(void)
 	int				ready;
 	struct pollfd	*pfds;
 	nfds_t			num_open_fds, nfds;
-	char *files[5] = {"files/41_no_nl", "files/41_with_nl", "files/alternate_line_nl_no_nl", "files/empty", "files/multiple_line_no_nl"};
+	char *files[7] = {"files/41_no_nl", "files/41_with_nl", "files/alternate_line_nl_no_nl", "files/empty", "files/multiple_line_no_nl", "files/big_line_no_nl","files/big_line_with_nl"};
 	char *res;
 
-	num_open_fds = nfds = 5;
+	num_open_fds = nfds = 7;
 	pfds = calloc(nfds, sizeof(struct pollfd));
 	if (pfds == NULL)
 		errExit("malloc");
