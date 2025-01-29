@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:49:03 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/28 20:23:33 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/30 00:26:49 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,6 @@ size_t	ft_strlen(const char *str)
 	while (str[result])
 		result++;
 	return (result);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*jstr;
-	char	*temp;
-	int		len;
-	int		len_s1;
-	int		len_s2;
-
-	len_s1 = 0;
-	len_s2 = 0;
-	while (s1[len_s1])
-		len_s1++;
-	while (s2[len_s2])
-		len_s2++;
-	len = len_s1 + len_s2;
-	jstr = malloc(sizeof(char) * len + 1);
-	if (jstr == NULL)
-		return (NULL);
-	temp = jstr;
-	while (*s1)
-		*temp++ = *s1++;
-	while (*s2)
-		*temp++ = *s2++;
-	*temp = '\0';
-	return (jstr);
 }
 
 char	*ft_strdup(const char *s)
@@ -85,4 +58,24 @@ char	*ft_strchr(const char *str, int ch)
 	if (*str == ch)
 		return ((char *)str);
 	return (NULL);
+}
+
+void	realloc_line(char **r_line, char *buffer, int size)
+{
+	char	*temp;
+	char	*copy;
+	int	i;
+
+	i = 0;
+	temp = *r_line;
+	copy = malloc(size + 1);
+	if (!copy)
+		return;
+	while(temp && *temp)
+		copy[i++] = *temp++;
+	while(*buffer)
+		copy[i++] = *buffer++;
+	copy[i] = '\0';
+	free(*r_line);
+	*r_line = copy;
 }
