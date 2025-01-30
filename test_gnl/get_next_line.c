@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:00:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/01/30 00:50:48 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/01/30 01:06:05 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static int	form_line( char **r_line, char *buffer, int r_count, int size)
 	int	len;
 	char	*temp;
 
-	if (size - r_count <= 0)
+	if (size - r_count <= r_count)
 	{
 		len = ft_strlen(*r_line);
 		size = (len + r_count) * 2;
