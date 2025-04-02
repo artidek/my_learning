@@ -13,24 +13,25 @@ LIBR		= push_swap.a
 NAME		= push_swap
 
 %.o: %.c
-		$(CC) $(CFLAGS) -c $< -o $@
+		@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(LIBR)
-	$(CC) $(CFLAGS) main.c -g -o push_swap $(LIBR)
+	@$(CC) $(CFLAGS) main.c -g -o push_swap $(LIBR)
+	@echo "Make was successfull"
 
 all: $(NAME)
 
 $(FTPRINTF): 
-		make -C $(FTPRINTFPATH) all
+		@make -C $(FTPRINTFPATH) all
 
 $(LIBR): $(FTPRINTF) $(OBJS)
-		cp $(FTPRINTF) $(LIBR)
-		ar rcs $(LIBR) $(OBJS)
+		@cp $(FTPRINTF) $(LIBR)
+		@ar rcs $(LIBR) $(OBJS)
 
 fclean: 
-			make -C $(FTPRINTFPATH) fclean
-			$(RM) $(OBJS)
-			$(RM) $(LIBR)
-			$(RM) push_swap
-			
-PHONY: fclean all
+		@make -C $(FTPRINTFPATH) fclean
+		@$(RM) $(OBJS)
+		@$(RM) $(LIBR)
+		@$(RM) push_swap
+
+.PHONY: fclean all
