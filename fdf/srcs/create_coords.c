@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_coords.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 21:06:00 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/04/03 16:29:23 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/04/03 21:25:10 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_step_coord	create_coords(t_coord *coords)
 		height = temp->y;
 		temp = temp->next;
 	}
-	res.height = height;
+	res.height = height + 1;
 	res.colors = malloc(sizeof(int *) * (height + 1));
 	res.z_matrix = malloc(sizeof(int *) * (height + 1));
 	(res.colors)[height] = NULL;

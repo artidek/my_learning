@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:16:21 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/04/03 16:25:41 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/04/03 21:26:18 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	draw_map(t_addr *addrs, t_step_coord coords)
 
 	y = 0;
 	x = 0;
-	while (y < coords.height)
+	while (y < coords.height - 1)
 	{
 		while (x < coords.width - 1)
 		{
