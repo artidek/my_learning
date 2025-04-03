@@ -3,18 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   bresenham.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 07:17:34 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/04/01 22:25:53 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:26:20 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
+static int	direction(int d)
+{
+	if (d < 0)
+		return (-1);
+	else
+		return (1);
+}
+
 static t_pix	check_xy(t_pix xy)
 {
-	int temp;
+	int	temp;
 
 	if (xy.x > xy.x1 || xy.y > xy.y1)
 	{
@@ -32,15 +40,18 @@ static void	draw_line_h(t_pix xy, t_addr *addr, int dx, int dy)
 {
 	int	p;
 	int	i;
-	int	dir = dy < 0 ? -1 : 1;
+	int	dir;
 	int	y;
 
+	dir = direction(dy);
 	y = xy.y;
 	dy *= dir;
 	p = 2 * dy - dx;
-	for (i = 0; i <= dx; i++)
+	i = 0;
+	while (i <= dx)
 	{
 		mlx_pixel_put(addr->mlx, addr->win, xy.x + i, y, xy.color);
+		i++;
 		if (p >= 0)
 		{
 			y += dir;
@@ -54,15 +65,18 @@ static void	draw_line_v(t_pix xy, t_addr *addr, int dx, int dy)
 {
 	int	p;
 	int	i;
-	int	dir = dx < 0 ? -1 : 1;
+	int	dir;
 	int	x;
 
+	dir = direction(dx);
 	x = xy.x;
 	dx *= dir;
 	p = 2 * dx - dy;
-	for (i = 0; i <= dy; i++)
+	i = 0;
+	while (i <= dy)
 	{
 		mlx_pixel_put(addr->mlx, addr->win, x, xy.y + i, xy.color);
+		i++;
 		if (p >= 0)
 		{
 			x += dir;

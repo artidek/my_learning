@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 17:40:17 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/04/02 21:46:17 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:27:19 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@
 # include <linux/input.h>
 # include <math.h>
 
-# ifndef M_PI
-#  define M_PI 3.14159265358979323846
-# endif
-# define MAX(a, b) (a > b ? a : b)
+# define M_PI 3.14159265358979323846
 
 typedef struct s_coord
 {

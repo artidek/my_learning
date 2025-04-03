@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   atob.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 19:28:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/03/30 16:52:29 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:21:26 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../fdf.h"
+#include "../fdf.h"
 
 static int	base_val(char ch, char *base)
 {
@@ -28,9 +28,9 @@ static int	base_val(char ch, char *base)
 
 int	atob(char *num)
 {
-	int		res;
-	int		hexval;
-	int		i;
+	int	res;
+	int	hexval;
+	int	i;
 
 	res = 0;
 	i = 0;

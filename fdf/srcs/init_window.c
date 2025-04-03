@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_window.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:44:22 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/04/01 20:34:01 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:37:51 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../fdf.h"
+#include "../fdf.h"
 
 static int	close_key(int key_code, t_addr *addrs)
 {
@@ -37,9 +37,9 @@ void	start_window(t_step_coord coords)
 	if (!addreses.mlx)
 	{
 		ft_printf("Failed to create connection\n");
-		return;
-	} 
-	addreses.win = mlx_new_window(addreses.mlx, 1280, 960, "test window");
+		return ;
+	}
+	addreses.win = mlx_new_window(addreses.mlx, 1280, 960, "fdf");
 	draw_map(&addreses, coords);
 	mlx_key_hook(addreses.win, close_key, &addreses);
 	mlx_hook(addreses.win, 33, 0, close_msg, &addreses);

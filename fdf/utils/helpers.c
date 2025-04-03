@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:50:42 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/03/18 09:47:48 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:19:41 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	check_file(char *file)
 int	is_digits(char **arr)
 {
 	int		i;
-	int	j;
+	int		j;
 	char	**temparr;
 
 	i = 0;
@@ -84,6 +84,7 @@ int	is_ints(char **arr)
 	}
 	return (1);
 }
+
 int	arr_len(char **arr)
 {
 	int	len;

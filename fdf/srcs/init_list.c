@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   init_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 08:16:50 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/03/30 01:21:56 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:11:53 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-/*static void	check_coords(t_coord **res)
+static void	check_coords(t_coord **res)
 {
 	t_coord	*temp;
-	int	comp_len;
-	int	len;
-	
+	int		comp_len;
+	int		len;
+
 	if (!*res)
-		return;
+		return ;
 	temp = *res;
 	comp_len = arr_len(temp->heights);
 	while (temp)
@@ -28,11 +28,11 @@
 		if (len != comp_len)
 		{
 			clear_list(res);
-			return;
+			return ;
 		}
 		temp = temp->next;
 	}
-}*/
+}
 
 static char	**add_heights(char *row)
 {
@@ -45,19 +45,8 @@ static char	**add_heights(char *row)
 	return (spltd);
 }
 
-/*static int check_valid(char **heights)
-{
-	if (!is_digits(heights) || !is_ints(heights))
-	{
-		ft_printf("Wrong values in fdf file or file is empty\n");
-		return (0);
-	}
-	return (1);
-}*/
-
 static void	add_coords(int fd, t_coord **res)
 {
-	//t_coord	*temp;
 	char	*row;
 	int		i;
 
@@ -72,17 +61,6 @@ static void	add_coords(int fd, t_coord **res)
 		row = get_next_line(fd);
 		i++;
 	}
-	/*temp = *res;
-	while (temp)
-	{
-		if (!check_valid(temp->heights))
-		{
-			clear_list(res);
-			res = NULL;
-			return;
-		}
-		temp = temp->next;
-	}*/
 }
 
 t_coord	*init_list(char *file)
@@ -95,7 +73,7 @@ t_coord	*init_list(char *file)
 	if (fd <= 0)
 		return (NULL);
 	add_coords(fd, &result);
-	//check_coords(&result);
+	check_coords(&result);
 	if (!result)
 	{
 		ft_printf("Error when trying to build a wireframe\n");

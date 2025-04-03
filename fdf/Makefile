@@ -34,7 +34,7 @@ $(NAME): main.c $(LIBR)
 
 all: $(NAME)
 
-$(PRINTFA): 
+$(PRINTFA):
 			@make -s -C $(PRINTFPATH)
 
 $(MLXA):
@@ -47,11 +47,11 @@ $(LIBR): $(PRINTFA) $(MLXA) $(OBJS)
 		@rm -f *.o
 
 
-clean: 
+clean:
 		@rm -f $(OBJS)
 		@echo "Clean complete"
 
-fclean: 
+fclean:
 		@rm -f $(OBJS)
 		@rm -f $(NAME)
 		@rm -f $(LIBR)
